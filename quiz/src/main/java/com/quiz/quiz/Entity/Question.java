@@ -5,8 +5,11 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Data
 @Entity
@@ -26,11 +29,12 @@ public class Question {
     @Column(name = "theme",nullable = false)
     private String theme;
 
-    @Column(name = "answers",nullable = false)
-    private List<String> answers;
+    @OneToMany(cascade = ALL, orphanRemoval = true)
+    @JoinColumn(name = "question_id")
+    private List<Answer> answers = new ArrayList<>();
 
 
-    @Column(name = "points")
-    private double points;
+    @Column(name = "score")
+    private double score;
 
 }

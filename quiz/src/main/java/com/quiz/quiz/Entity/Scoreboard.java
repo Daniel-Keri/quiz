@@ -28,7 +28,6 @@ public class Scoreboard {
     @Column(name = "username")
     private String username;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @Column
-    private User user;
+    @Column(name = "user_id")
+    private UUID userId;
 }

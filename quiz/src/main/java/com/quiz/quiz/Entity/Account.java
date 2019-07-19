@@ -9,10 +9,9 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Data
-@Entity
-@Table( name = "account")
+@MappedSuperclass
 @Accessors(chain = true)
-public class Account {
+public abstract class Account {
 
     @Id
     @Column(name = "id")
@@ -25,6 +24,9 @@ public class Account {
 
     @Column(name = "password",nullable = false)
     private String password;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)

@@ -4,10 +4,7 @@ import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
 import com.quiz.quiz.exc.ScoreboardNotFoundException;
 import com.quiz.quiz.services.ScoreboardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,12 +18,14 @@ public class ScoreboardController {
 
     // GET
     @GetMapping(name = "/findByTheme")
-    public ScoreboardResponse getScoreboardByTheme(@RequestParam(name = "theme") String theme) throws ScoreboardNotFoundException {
+    @ResponseBody
+    public List<ScoreboardResponse> getScoreboardByTheme(@RequestParam(name = "theme") String theme) throws ScoreboardNotFoundException {
 
         return scoreboardService.getScoreboardByTheme(theme);
     }
 
-    @GetMapping()
+    @GetMapping
+    @ResponseBody
     public List<ScoreboardResponse> getScoreBoard() {
 
         return scoreboardService.getScoreBoard();

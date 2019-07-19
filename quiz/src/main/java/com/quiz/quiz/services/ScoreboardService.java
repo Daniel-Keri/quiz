@@ -18,11 +18,11 @@ public class ScoreboardService {
     private final ScoreboardRepository scoreboardRepository;
     private final ScoreboardConverter scoreboardConverter;
 
-    public ScoreboardResponse getScoreboardByTheme(String theme) throws ScoreboardNotFoundException {
+    public List<ScoreboardResponse> getScoreboardByTheme(String theme) throws ScoreboardNotFoundException {
 
-        return scoreboardConverter.toScoreboardResponse(
-                scoreboardRepository.getScoreboardByTheme(theme).orElseThrow(ScoreboardNotFoundException::new)
-        );
+        return scoreboardRepository.getScoreboardByTheme(theme).stream()
+                .map(scoreboardConverter::toScoreboardResponse)
+                .collect(Collectors.toList());
     }
 
     public List<ScoreboardResponse> getScoreBoard() {

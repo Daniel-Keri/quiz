@@ -1,0 +1,32 @@
+buildscript {
+
+	dependencies {
+		classpath("io.franzbecker:gradle-lombok:1.13")
+	}
+}
+
+
+
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'io.franzbecker.gradle-lombok'
+
+group = 'com.quiz'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	runtime group: 'org.postgresql', name: 'postgresql'
+	compile group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.2.3'
+}

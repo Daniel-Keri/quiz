@@ -1,6 +1,6 @@
-package com.quiz.quiz.Entity;
+package com.quiz.quiz.entity;
 
-import com.quiz.quiz.Enums.Role;
+import com.quiz.quiz.enums.Role;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;

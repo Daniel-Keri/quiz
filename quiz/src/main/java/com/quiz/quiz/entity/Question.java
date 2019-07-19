@@ -1,4 +1,4 @@
-package com.quiz.quiz.Entity;
+package com.quiz.quiz.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -23,10 +23,10 @@ public class Question {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private UUID id;
 
-    @Column(name = "text,nullable = false")
+    @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "theme",nullable = false)
+    @Column(name = "theme", nullable = false)
     private String theme;
 
     @OneToMany(cascade = ALL, orphanRemoval = true)

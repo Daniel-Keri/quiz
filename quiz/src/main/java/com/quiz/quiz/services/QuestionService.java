@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -33,13 +34,13 @@ public class QuestionService {
         questionRepository.findAllById(ids).forEach(questionRepository::delete);
     }
 
-    public Page<QuestionScoreResponse> findAll(Pageable pageable) {
+    public Page<QuestionScoreResponse> findAllByTheme(String theme, Pageable pageable) {
 
-        Page<Question> questionPage = questionRepository.findAll(pageable);
+        Page<Question> questionPage = questionRepository.findAllByTheme(theme, pageable);
 
         List<Question> questionList = questionPage.getContent();
 
-        Page<QuestionScoreResponse> questionScoreResponsePage = new PageImpl<QuestionScoreResponse>(
+        Page<QuestionScoreResponse> questionScoreResponsePage = new PageImpl<>(
                 questionList.stream().map(questionConverter::toQuestionScoreResponse).collect(Collectors.toList()),
                 pageable,
                 questionList.size());
@@ -47,11 +48,11 @@ public class QuestionService {
         return questionScoreResponsePage;
     }
 
-    public Page<QuestionScoreResponse> findAllRandomized(Pageable pageable) {
+    public Page<QuestionScoreResponse> findAllByThemeRandomized(String theme, Pageable pageable) {
 
-        Page<Question> questionPage = questionRepository.findAll(pageable);
+        Page<Question> questionPage = questionRepository.findAllByTheme(theme, pageable);
 
-        List<Question> questionList = questionPage.getContent();
+        List<Question> questionList = new ArrayList<>(questionPage.getContent());
         Collections.shuffle(questionList);
 
         Page<QuestionScoreResponse> questionScoreResponsePage = new PageImpl<>(

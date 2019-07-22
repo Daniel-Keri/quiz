@@ -11,6 +11,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ScoreboardResponse {
 
+    //private UUID id;
+
     private String theme;
 
     private Double score;

@@ -33,7 +33,6 @@ public class Question {
     @JoinColumn(name = "question_id")
     private List<Answer> answers = new ArrayList<>();
 
-
     @Column(name = "score")
     private double score;
 

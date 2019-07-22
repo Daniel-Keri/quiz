@@ -4,7 +4,6 @@ import com.quiz.quiz.converter.ScoreboardConverter;
 import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
 import com.quiz.quiz.exc.ScoreboardNotFoundException;
 import com.quiz.quiz.repository.ScoreboardRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

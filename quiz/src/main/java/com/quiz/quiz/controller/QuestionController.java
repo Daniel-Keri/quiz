@@ -31,16 +31,16 @@ public class QuestionController {
         questionService.deleteQuestions(ids);
     }
 
-    @GetMapping
-    public Page<QuestionScoreResponse> findAll(Pageable pageable) {
+    @GetMapping("/findAllByTheme/{theme}")
+    public Page<QuestionScoreResponse> findAllByTheme(@PathVariable("theme") String theme, Pageable pageable) {
 
-        return questionService.findAll(pageable);
+        return questionService.findAllByTheme(theme, pageable);
     }
 
-    @GetMapping("/random")
-    public Page<QuestionScoreResponse> findAllRandomized(Pageable pageable) {
+    @GetMapping("/findAllByThemeRandomized/{theme}")
+    public Page<QuestionScoreResponse> findAllByThemeRandomized(@PathVariable("theme") String theme, Pageable pageable) {
 
-        return questionService.findAllRandomized(pageable);
+        return questionService.findAllByThemeRandomized(theme, pageable);
     }
 
     @GetMapping("/answers")

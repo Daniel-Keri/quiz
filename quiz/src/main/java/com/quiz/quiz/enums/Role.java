@@ -1,4 +1,4 @@
-package com.quiz.quiz.Enums;
+package com.quiz.quiz.enums;
 
 public enum Role {
     ROLE_USER,

@@ -1,4 +1,4 @@
-package com.quiz.quiz.Entity;
+package com.quiz.quiz.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -9,9 +9,9 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table( name = "answer")
+@Table( name = "scoreboard")
 @Accessors(chain = true)
-public class Answer {
+public class Scoreboard {
 
     @Id
     @Column(name = "id")
@@ -19,12 +19,15 @@ public class Answer {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private UUID id;
 
-    @Column(name = "text")
-    private String text;
+    @Column(name = "theme")
+    private String theme;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "score")
+    private  Double score;
 
-    @Column(name = "is_correct",nullable = false)
-    private Boolean isCorrect;
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "user_id")
+    private UUID userId;
 }

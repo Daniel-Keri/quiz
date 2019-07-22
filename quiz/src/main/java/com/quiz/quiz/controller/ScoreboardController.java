@@ -1,4 +1,4 @@
-package com.quiz.quiz.Controllers;
+package com.quiz.quiz.controller;
 
 public class ScoreboardController {
 }

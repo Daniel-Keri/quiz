@@ -31,3 +31,4 @@ public class Scoreboard {
     @Column(name = "user_id")
     private UUID userId;
 }
+

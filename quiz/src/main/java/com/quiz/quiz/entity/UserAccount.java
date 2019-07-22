@@ -1,4 +1,4 @@
-package com.quiz.quiz.Entity;
+package com.quiz.quiz.entity;
 
 import lombok.Data;
 
@@ -15,5 +15,5 @@ public class UserAccount extends Account {
     @MapKeyColumn(name = "question_id")
     @Column(name = "score")
     @CollectionTable(name = "answered_questions")
-    private Map<UUID, Question> answeredQuestions;
+    private Map<UUID,Double> answeredQuestions;
 }

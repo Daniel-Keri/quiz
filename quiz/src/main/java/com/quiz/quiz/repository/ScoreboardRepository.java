@@ -1,6 +1,6 @@
 package com.quiz.quiz.repository;
 
-import com.quiz.quiz.Entity.Scoreboard;
+import com.quiz.quiz.entity.Scoreboard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

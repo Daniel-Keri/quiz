@@ -10,15 +10,17 @@ import java.util.UUID;
 
 @Data
 @Accessors(chain = true)
-public class QuestionResponse {
+public class CreateQuestionResponse {
 
     private UUID id;
 
-    private double score;
+    private String text;
 
     private String theme;
 
     private List<Answer> answers = new ArrayList<>();
 
-    private String text;
+    private String image;
+
+    private double score;
 }

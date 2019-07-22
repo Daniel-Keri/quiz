@@ -11,11 +11,15 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 public class QuestionRequest {
+
     private UUID id;
 
     private double score;
+
     private String theme;
+
     private List<Answer> answers = new ArrayList<>();
+
     private String text;
 
 }

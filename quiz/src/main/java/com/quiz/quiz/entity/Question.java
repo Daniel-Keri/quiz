@@ -33,6 +33,8 @@ public class Question {
     @JoinColumn(name = "question_id")
     private List<Answer> answers = new ArrayList<>();
 
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "score")
     private double score;

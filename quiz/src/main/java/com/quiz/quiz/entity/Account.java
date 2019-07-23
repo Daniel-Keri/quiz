@@ -2,16 +2,18 @@ package com.quiz.quiz.entity;
 
 import com.quiz.quiz.enums.Role;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
 
-@Entity
 @Data
-//@MappedSuperclass
+@MappedSuperclass
+@NoArgsConstructor
 @Accessors(chain = true)
+//@DiscriminatorColumn(name = "user_type")
 public abstract class Account {
 
     @Id

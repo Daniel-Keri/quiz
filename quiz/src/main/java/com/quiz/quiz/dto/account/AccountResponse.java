@@ -4,15 +4,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.MappedSuperclass;
+import java.util.UUID;
 
 @MappedSuperclass
 @Data
 @Accessors(chain=true)
-public class AccountRequest {
+public class AccountResponse {
 
-    private String email;
-
-    private String password;
-
-    private String username;
+    private UUID id;
 }

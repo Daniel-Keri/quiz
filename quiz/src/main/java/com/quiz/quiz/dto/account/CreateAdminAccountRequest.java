@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain=true)
-public class AdminAccountRequest extends AccountRequest {
+public class CreateAdminAccountRequest extends AccountRequest {
 
 
 }

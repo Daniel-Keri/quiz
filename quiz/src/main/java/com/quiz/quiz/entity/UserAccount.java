@@ -9,6 +9,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table( name = "user_account")
+//@DiscriminatorValue(value = "user_account")
 public class UserAccount extends Account {
 
     @ElementCollection

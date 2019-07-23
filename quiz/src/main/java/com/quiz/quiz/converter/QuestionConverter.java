@@ -1,6 +1,6 @@
 package com.quiz.quiz.converter;
 
-import com.quiz.quiz.dto.*;
+import com.quiz.quiz.dto.question.*;
 import com.quiz.quiz.entity.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

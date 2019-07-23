@@ -1,4 +1,4 @@
-package com.quiz.quiz.dto;
+package com.quiz.quiz.dto.question;
 
 import com.quiz.quiz.entity.Answer;
 import lombok.Data;
@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
 @Data
 @Accessors(chain = true)
-public class CreateQuestionRequest {
+public class QuestionRequest {
 
-    //private UUID id;
+    private UUID id;
 
     private double score;
 
@@ -23,6 +22,4 @@ public class CreateQuestionRequest {
 
     private String text;
 
-    private String image;
 }
-

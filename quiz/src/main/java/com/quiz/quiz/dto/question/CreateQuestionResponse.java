@@ -1,4 +1,4 @@
-package com.quiz.quiz.dto;
+package com.quiz.quiz.dto.question;
 
 import com.quiz.quiz.entity.Answer;
 import lombok.Data;

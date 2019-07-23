@@ -4,18 +4,16 @@ import com.quiz.quiz.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
-import static org.springframework.http.HttpMethod.POST;
+import static com.quiz.quiz.config.constants.URIConstants.*;
+import static org.springframework.http.HttpMethod.GET;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -50,21 +48,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors().disable()
+                .csrf().disable()
                 .authorizeRequests()
-                    .anyRequest().authenticated()
+                .antMatchers(QUESTION + EVERY_SUBPATH).authenticated()
+                .antMatchers(SCOREBOARD + EVERY_SUBPATH).authenticated()
+                .antMatchers(ADMIN_ACCOUNT + EVERY_SUBPATH).authenticated()
+                .antMatchers(GET, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
                 .and()
                 .formLogin()
                 .and()
                 .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.NO_CONTENT));
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login");
+//                    .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.NO_CONTENT));
 
     }
 
-    @Override
-    public void configure(WebSecurity webSecurity) {
-        webSecurity
-                .ignoring()
-                .antMatchers(POST, "/userAccounts");
-    }
+//    @Override
+//    public void configure(WebSecurity webSecurity) {
+//        webSecurity
+//                .ignoring()
+//                .antMatchers(POST, "/userAccounts")
+//                .antMatchers(POST, "/adminAccounts");
+//    }
 }

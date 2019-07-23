@@ -1,10 +1,10 @@
-package com.quiz.quiz.services;
+package com.quiz.quiz.services.accounts;
 
 import com.quiz.quiz.converter.AccountConverter;
 import com.quiz.quiz.dto.account.CreateAdminAccountRequest;
 import com.quiz.quiz.dto.account.CreateAdminAccountResponse;
 import com.quiz.quiz.entity.AdminAccount;
-import com.quiz.quiz.repository.AdminAccountRepository;
+import com.quiz.quiz.repository.accounts.AdminAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

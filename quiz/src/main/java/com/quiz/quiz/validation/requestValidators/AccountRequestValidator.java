@@ -1,7 +1,7 @@
 package com.quiz.quiz.validation.requestValidators;
 
 import com.quiz.quiz.dto.account.AccountRequest;
-import com.quiz.quiz.repository.AccountRepository;
+import com.quiz.quiz.repository.accounts.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

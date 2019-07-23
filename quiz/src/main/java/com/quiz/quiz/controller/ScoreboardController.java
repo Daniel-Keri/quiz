@@ -1,5 +1,6 @@
 package com.quiz.quiz.controller;
 
+import com.quiz.quiz.config.constants.URINameConstants;
 import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
 import com.quiz.quiz.exceptions.ScoreboardNotFoundException;
 import com.quiz.quiz.services.ScoreboardService;
@@ -10,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("scoreboards")
+@RequestMapping(URINameConstants.SCOREBOARD)
 @RequiredArgsConstructor
 public class ScoreboardController {
 

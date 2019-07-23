@@ -1,4 +1,4 @@
-package com.quiz.quiz.repository;
+package com.quiz.quiz.repository.accounts;
 
 import com.quiz.quiz.entity.Account;
 import com.quiz.quiz.entity.AdminAccount;

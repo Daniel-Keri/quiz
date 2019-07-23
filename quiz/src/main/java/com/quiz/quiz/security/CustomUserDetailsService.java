@@ -2,7 +2,7 @@ package com.quiz.quiz.security;
 
 import com.quiz.quiz.entity.Account;
 import com.quiz.quiz.enums.Role;
-import com.quiz.quiz.repository.AccountRepository;
+import com.quiz.quiz.repository.accounts.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

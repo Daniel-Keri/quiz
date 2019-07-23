@@ -1,6 +1,5 @@
 package com.quiz.quiz.repository;
 
-import com.quiz.quiz.dto.QuestionScoreResponse;
 import com.quiz.quiz.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,7 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
     Page<Question> findAllByTheme(String theme, Pageable pageable);
 
 
-//    @Query("SELECT new com.quiz.quiz.dto.QuestionScoreResponse()")
+//    @Query("SELECT new com.quiz.quiz.dto.question.QuestionScoreResponse()")
 //    Page<Question> findAll();
 
 

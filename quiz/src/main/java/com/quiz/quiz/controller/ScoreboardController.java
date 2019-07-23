@@ -1,7 +1,7 @@
 package com.quiz.quiz.controller;
 
 import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
-import com.quiz.quiz.exc.ScoreboardNotFoundException;
+import com.quiz.quiz.exceptions.ScoreboardNotFoundException;
 import com.quiz.quiz.services.ScoreboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

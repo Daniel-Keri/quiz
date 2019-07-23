@@ -1,7 +1,9 @@
 package com.quiz.quiz.services;
 
 import com.quiz.quiz.converter.QuestionConverter;
-import com.quiz.quiz.dto.*;
+import com.quiz.quiz.dto.question.CreateQuestionRequest;
+import com.quiz.quiz.dto.question.CreateQuestionResponse;
+import com.quiz.quiz.dto.question.QuestionScoreResponse;
 import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.entity.Question;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;

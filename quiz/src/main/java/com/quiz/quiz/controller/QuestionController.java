@@ -1,9 +1,10 @@
 package com.quiz.quiz.controller;
 
 
-import com.quiz.quiz.dto.*;
+import com.quiz.quiz.dto.question.CreateQuestionRequest;
+import com.quiz.quiz.dto.question.CreateQuestionResponse;
+import com.quiz.quiz.dto.question.QuestionScoreResponse;
 import com.quiz.quiz.entity.Answer;
-import com.quiz.quiz.entity.Question;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
 import com.quiz.quiz.services.QuestionService;
 import lombok.RequiredArgsConstructor;

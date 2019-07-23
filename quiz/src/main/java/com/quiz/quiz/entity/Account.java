@@ -8,8 +8,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.UUID;
 
+@Entity
 @Data
-@MappedSuperclass
+//@MappedSuperclass
 @Accessors(chain = true)
 public abstract class Account {
 

@@ -1,4 +1,4 @@
-package com.quiz.quiz.dto;
+package com.quiz.quiz.dto.question;
 
 import com.quiz.quiz.entity.Answer;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Data
 @Accessors(chain = true)
-public class QuestionRequest {
+public class QuestionResponse {
 
     private UUID id;
 
@@ -21,5 +21,4 @@ public class QuestionRequest {
     private List<Answer> answers = new ArrayList<>();
 
     private String text;
-
 }

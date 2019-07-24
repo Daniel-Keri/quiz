@@ -1,4 +1,4 @@
-package com.quiz.quiz.repository;
+package com.quiz.quiz._not_used;
 
 import com.quiz.quiz.entity.Question;
 import org.springframework.data.repository.query.Param;

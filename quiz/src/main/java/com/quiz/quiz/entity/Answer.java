@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Blob;
 import java.util.UUID;
 
 @Data
@@ -24,7 +25,7 @@ public class Answer {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition = "text")
     private String image;
 
     @NotNull

@@ -1,6 +1,6 @@
 package com.quiz.quiz.config.constants;
 
-public class URIConstants /*extends URINameConstants*/ {
+public class URIConstants {
 
     public static final String EVERY_SUBPATH = "/**";
 

@@ -4,7 +4,9 @@ import com.quiz.quiz.dto.answer.CreateAnswerRequest;
 import com.quiz.quiz.dto.answer.CreateAnswerResponse;
 import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
 import com.quiz.quiz.entity.Answer;
+import javassist.bytecode.ByteArray;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,5 +27,13 @@ public class AnswerConverter {
                 .setText(createAnswerRequest.getText())
                 .setImage(createAnswerRequest.getImage())
                 .setIsCorrect(createAnswerRequest.getIsCorrect());
+    }
+
+    public QuestionAnswerResponse toQuestionAnswerResponse(Answer answer){
+
+        return new QuestionAnswerResponse()
+                .setText(answer.getText())
+                .setImage(answer.getImage())
+                .setIsCorrect(answer.getIsCorrect());
     }
 }

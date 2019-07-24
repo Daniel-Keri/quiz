@@ -24,7 +24,7 @@ public class Scoreboard {
     private String theme;
 
     @Column(name = "score")
-    private  Double score;
+    private Double score;
 
     @Column(name = "username")
     private String username;

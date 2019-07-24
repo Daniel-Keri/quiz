@@ -1,6 +1,9 @@
 package com.quiz.quiz.services;
 
+import com.quiz.quiz.converter.QuestionAnswerConverter;
 import com.quiz.quiz.converter.QuestionConverter;
+import com.quiz.quiz.dto.answer.QuestionAnswerRequest;
+import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.QuestionScoreResponse;
@@ -26,8 +29,10 @@ import java.util.stream.Collectors;
 public class QuestionService {
 
     private final QuestionConverter questionConverter;
+    private final QuestionAnswerConverter questionAnswerConverter;
     private final QuestionRepository questionRepository;
 
+    //DELETE
     public void deleteQuestion(UUID id) throws QuestionNotFoundException {
         questionRepository.delete(questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new));
     }
@@ -36,6 +41,7 @@ public class QuestionService {
         questionRepository.findAllById(ids).forEach(questionRepository::delete);
     }
 
+    //GET
     public Page<QuestionScoreResponse> findAllByTheme(String theme, Pageable pageable) {
 
         Page<Question> questionPage = questionRepository.findAllByTheme(theme, pageable);
@@ -65,12 +71,19 @@ public class QuestionService {
         return questionScoreResponsePage;
     }
 
-    public List<Answer> findAllQuestionAnswers(UUID questionId) {
+    public List<QuestionAnswerResponse> findAllQuestionAnswers(QuestionAnswerRequest questionAnswerRequest) {
 
-        Question question = questionRepository.findById(questionId).orElseThrow(QuestionNotFoundException::new);
-        return question.getAnswers();
+        List<Answer> answers = questionRepository
+                .findById(questionAnswerRequest.getId())
+                .orElseThrow(QuestionNotFoundException::new)
+                .getAnswers();
+
+        return answers.stream()
+                .map(questionAnswerConverter::toQuestionAnswerResponse)
+                .collect(Collectors.toList());
     }
 
+    //SAVE
     public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest){
 
         return questionConverter.toCreateQuestionResponse(

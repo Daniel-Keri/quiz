@@ -4,13 +4,11 @@ package com.quiz.quiz.controller.accounts;
 import com.quiz.quiz.config.constants.URINameConstants;
 import com.quiz.quiz.dto.account.CreateUserAccountResponse;
 import com.quiz.quiz.dto.account.CreateUserAccountRequest;
+import com.quiz.quiz.dto.account.GetUserAccountDataResponse;
 import com.quiz.quiz.services.accounts.UserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(URINameConstants.USER_ACCOUNT)
@@ -25,5 +23,12 @@ public class UserAccountController {
     public CreateUserAccountResponse createUserAccount(@Validated @RequestBody CreateUserAccountRequest createUserAccountRequest){
 
         return userAccountService.createUserAccount(createUserAccountRequest);
+    }
+
+    // GET
+    @GetMapping
+    public GetUserAccountDataResponse getUserAccountData() {
+
+        return userAccountService.getUserAccountData();
     }
 }

@@ -1,6 +1,5 @@
 package com.quiz.quiz.controller;
 
-import com.quiz.quiz.config.constants.URINameConstants;
 import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
 import com.quiz.quiz.exceptions.ScoreboardNotFoundException;
 import com.quiz.quiz.services.ScoreboardService;
@@ -9,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.quiz.quiz.config.constants.URIConstants.SCOREBOARD;
+
 
 @RestController
-@RequestMapping(URINameConstants.SCOREBOARD)
+@RequestMapping(SCOREBOARD)
 @RequiredArgsConstructor
 public class ScoreboardController {
 

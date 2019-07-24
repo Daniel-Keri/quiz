@@ -1,43 +1,46 @@
 package com.quiz.quiz.controller;
 
 
-import com.quiz.quiz.config.constants.URINameConstants;
 import com.quiz.quiz.dto.answer.QuestionAnswerRequest;
 import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.QuestionScoreResponse;
-import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
 import com.quiz.quiz.services.QuestionService;
+import com.quiz.quiz.validation.requestValidators.CreateQuestionRequestValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
+import static com.quiz.quiz.config.constants.URIConstants.QUESTION;
+
 @RestController
-@RequestMapping(URINameConstants.QUESTION)
+@RequestMapping(QUESTION)
 @RequiredArgsConstructor
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final CreateQuestionRequestValidator createQuestionRequestValidator;
 
-    // DELETE
-    @DeleteMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestion(UUID id) throws QuestionNotFoundException {
-        questionService.deleteQuestion(id);
+    @InitBinder("createQuestionRequest")
+    protected void initCreateQuestionRequestValidatorBinder(WebDataBinder binder) {
+        binder.addValidators(createQuestionRequestValidator);
     }
 
-    @DeleteMapping("/deleteQuestions")
+    // POST
+    @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestions(List<UUID> ids) throws QuestionNotFoundException {
-        questionService.deleteQuestions(ids);
+    public CreateQuestionResponse createQuestion(@Validated @RequestBody CreateQuestionRequest createQuestionRequest){
+
+        return questionService.createQuestion(createQuestionRequest);
     }
 
     // GET
@@ -59,11 +62,17 @@ public class QuestionController {
         return questionService.findAllQuestionAnswers(questionAnswerRequest);
     }
 
-    // POST
-    @PostMapping
-    public CreateQuestionResponse createQuestion(@RequestBody CreateQuestionRequest createQuestionRequest){
+    // DELETE
+    @DeleteMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteQuestion(UUID id) throws QuestionNotFoundException {
+        questionService.deleteQuestion(id);
+    }
 
-        return questionService.createQuestion(createQuestionRequest);
+    @DeleteMapping("/deleteQuestions")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteQuestions(List<UUID> ids) throws QuestionNotFoundException {
+        questionService.deleteQuestions(ids);
     }
 }
 

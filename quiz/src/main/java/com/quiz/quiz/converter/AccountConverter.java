@@ -2,6 +2,9 @@ package com.quiz.quiz.converter;
 
 import com.quiz.quiz.dto.account.CreateAdminAccountRequest;
 import com.quiz.quiz.dto.account.CreateUserAccountRequest;
+import com.quiz.quiz.dto.account.GetAdminAccountDataResponse;
+import com.quiz.quiz.dto.account.GetUserAccountDataResponse;
+import com.quiz.quiz.entity.Account;
 import com.quiz.quiz.entity.AdminAccount;
 import com.quiz.quiz.entity.UserAccount;
 import com.quiz.quiz.enums.Role;
@@ -31,5 +34,23 @@ public class AccountConverter {
                 .setPassword(bCryptPasswordEncoder.encode(createAdminAccountRequest.getPassword()))
                 .setEmail(createAdminAccountRequest.getEmail())
                 .setRole(Role.ROLE_ADMIN);
+    }
+
+    public GetUserAccountDataResponse toGetUserAccountDataResponse(Account account) {
+
+        return (GetUserAccountDataResponse) new GetUserAccountDataResponse()
+                .setId(account.getId())
+                .setRole(account.getRole())
+                .setUsername(account.getUsername())
+                .setEmail(account.getEmail());
+    }
+
+    public GetAdminAccountDataResponse toGetAdminAccountDataResponse(Account account) {
+
+        return (GetAdminAccountDataResponse) new GetAdminAccountDataResponse()
+                .setId(account.getId())
+                .setRole(account.getRole())
+                .setUsername(account.getUsername())
+                .setEmail(account.getEmail());
     }
 }

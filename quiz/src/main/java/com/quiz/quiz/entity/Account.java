@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Data
@@ -22,13 +23,16 @@ public abstract class Account {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private UUID id;
 
+    @NotNull
     @Column(name = "username",nullable = false)
     private String username;
 
+    @NotNull
     @Column(name = "password",nullable = false)
     private String password;
 
-    @Column(name = "email")
+    @NotNull
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "role", nullable = false)

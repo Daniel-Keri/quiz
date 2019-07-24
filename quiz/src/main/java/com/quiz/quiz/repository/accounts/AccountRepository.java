@@ -12,4 +12,6 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     @Query("SELECT a FROM com.quiz.quiz.entity.Account a WHERE a.email = ?1")
     Optional<Account> findByEmail(String email);
 
+    @Query("SELECT a FROM com.quiz.quiz.entity.Account a WHERE a.id = ?#{principal.id}")
+    Optional<Account> getAccountData();
 }

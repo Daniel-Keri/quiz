@@ -5,7 +5,7 @@ import com.quiz.quiz.dto.account.CreateUserAccountResponse;
 import com.quiz.quiz.dto.account.CreateUserAccountRequest;
 import com.quiz.quiz.dto.account.GetUserAccountDataResponse;
 import com.quiz.quiz.services.accounts.UserAccountService;
-import com.quiz.quiz.validation.requestValidators.UserAccountRequestValidator;
+import com.quiz.quiz.validation.requestValidators.account.UserAccountRequestValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;

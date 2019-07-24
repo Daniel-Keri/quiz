@@ -2,6 +2,8 @@ package com.quiz.quiz.controller;
 
 
 import com.quiz.quiz.config.constants.URINameConstants;
+import com.quiz.quiz.dto.answer.QuestionAnswerRequest;
+import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.QuestionScoreResponse;
@@ -52,9 +54,9 @@ public class QuestionController {
     }
 
     @GetMapping("/answers")
-    List<Answer> findAllQuestionAnswers(UUID questionId) {
+    List<QuestionAnswerResponse> findAllQuestionAnswers(QuestionAnswerRequest questionAnswerRequest) {
 
-        return questionService.findAllQuestionAnswers(questionId);
+        return questionService.findAllQuestionAnswers(questionAnswerRequest);
     }
 
     // POST

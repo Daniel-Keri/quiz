@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,7 +39,7 @@ public class Question {
     @JoinColumn(name = "question_id", nullable = false)
     private List<Answer> answers = new ArrayList<>();
 
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition = "text")
     private String image;
 
     @NotNull

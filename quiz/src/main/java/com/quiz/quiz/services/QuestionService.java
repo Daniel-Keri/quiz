@@ -1,6 +1,6 @@
 package com.quiz.quiz.services;
 
-import com.quiz.quiz.converter.QuestionAnswerConverter;
+import com.quiz.quiz.converter.AnswerConverter;
 import com.quiz.quiz.converter.QuestionConverter;
 import com.quiz.quiz.dto.answer.QuestionAnswerRequest;
 import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class QuestionService {
 
     private final QuestionConverter questionConverter;
-    private final QuestionAnswerConverter questionAnswerConverter;
+    private final AnswerConverter answerConverter;
     private final QuestionRepository questionRepository;
 
     //SAVE
@@ -81,7 +81,7 @@ public class QuestionService {
                 .getAnswers();
 
         return answers.stream()
-                .map(questionAnswerConverter::toQuestionAnswerResponse)
+                .map(answerConverter::toQuestionAnswerResponse)
                 .collect(Collectors.toList());
     }
 

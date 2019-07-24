@@ -15,25 +15,6 @@ public class QuestionConverter {
 
     private final AnswerConverter answerConverter;
 
-    public Question toQuestion(QuestionRequest questionRequest) {
-        return new Question()
-                .setScore(questionRequest.getScore())
-                .setText(questionRequest.getText())
-                .setAnswers(questionRequest.getAnswers())
-                .setTheme(questionRequest.getTheme())
-                .setId(questionRequest.getId());
-    }
-
-    public QuestionResponse toResponse(Question question)
-    {
-        return new QuestionResponse()
-                .setScore(question.getScore())
-                .setText(question.getText())
-                .setAnswers(question.getAnswers())
-                .setTheme(question.getTheme())
-                .setId(question.getId());
-    }
-
     public QuestionScoreResponse toQuestionScoreResponse(Question question)
     {
         return new QuestionScoreResponse()

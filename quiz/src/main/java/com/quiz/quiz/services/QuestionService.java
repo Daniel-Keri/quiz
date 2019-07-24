@@ -32,13 +32,11 @@ public class QuestionService {
     private final QuestionAnswerConverter questionAnswerConverter;
     private final QuestionRepository questionRepository;
 
-    //DELETE
-    public void deleteQuestion(UUID id) throws QuestionNotFoundException {
-        questionRepository.delete(questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new));
-    }
+    //SAVE
+    public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest){
 
-    public void deleteQuestions(List<UUID> ids) throws QuestionNotFoundException {
-        questionRepository.findAllById(ids).forEach(questionRepository::delete);
+        return questionConverter.toCreateQuestionResponse(
+                questionRepository.save(questionConverter.toCreateQuestion(createQuestionRequest)));
     }
 
     //GET
@@ -49,7 +47,9 @@ public class QuestionService {
         List<Question> questionList = questionPage.getContent();
 
         Page<QuestionScoreResponse> questionScoreResponsePage = new PageImpl<>(
-                questionList.stream().map(questionConverter::toQuestionScoreResponse).collect(Collectors.toList()),
+                questionList.stream()
+                        .map(questionConverter::toQuestionScoreResponse)
+                        .collect(Collectors.toList()),
                 pageable,
                 questionList.size());
 
@@ -64,7 +64,9 @@ public class QuestionService {
         Collections.shuffle(questionList);
 
         Page<QuestionScoreResponse> questionScoreResponsePage = new PageImpl<>(
-                questionList.stream().map(questionConverter::toQuestionScoreResponse).collect(Collectors.toList()),
+                questionList.stream()
+                        .map(questionConverter::toQuestionScoreResponse)
+                        .collect(Collectors.toList()),
                 pageable,
                 questionList.size());
 
@@ -83,13 +85,12 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    //SAVE
-    public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest){
-
-        return questionConverter.toCreateQuestionResponse(
-                questionRepository.save(questionConverter.toCreateQuestion(createQuestionRequest)));
+    //DELETE
+    public void deleteQuestion(UUID id) throws QuestionNotFoundException {
+        questionRepository.delete(questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new));
     }
 
-
-
+    public void deleteQuestions(List<UUID> ids) throws QuestionNotFoundException {
+        questionRepository.findAllById(ids).forEach(questionRepository::delete);
+    }
 }

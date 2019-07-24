@@ -1,5 +1,6 @@
 package com.quiz.quiz.dto.question;
 
+import com.quiz.quiz.dto.answer.CreateAnswerRequest;
 import com.quiz.quiz.entity.Answer;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -19,7 +20,7 @@ public class CreateQuestionRequest {
 
     private String theme;
 
-    private List<Answer> answers = new ArrayList<>();
+    private List<CreateAnswerRequest> answers = new ArrayList<>();
 
     private String text;
 

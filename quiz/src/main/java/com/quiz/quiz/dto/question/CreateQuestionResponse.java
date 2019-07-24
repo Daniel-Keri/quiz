@@ -1,5 +1,6 @@
 package com.quiz.quiz.dto.question;
 
+import com.quiz.quiz.dto.answer.CreateAnswerResponse;
 import com.quiz.quiz.entity.Answer;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,7 +19,7 @@ public class CreateQuestionResponse {
 
     private String theme;
 
-    private List<Answer> answers = new ArrayList<>();
+    private List<CreateAnswerResponse> answers = new ArrayList<>();
 
     private String image;
 

@@ -3,9 +3,9 @@ spring:
     store-type: jdbc
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/quiz
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL}
+    username: ${USERNAME}
+    password: ${PASSWORD}
     initialization-mode: always
   jpa:
     hibernate:

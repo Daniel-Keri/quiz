@@ -13,6 +13,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 public class Scoreboard {
 
+
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "uuid")

@@ -26,7 +26,7 @@ public class UserAccountService {
         UserAccount userAccount = accountConverter.toUserAccount(createUserAccountRequest);
         userAccountRepository.save(userAccount);
 
-        return (CreateUserAccountResponse) new CreateUserAccountResponse().setId(userAccount.getId());
+        return new CreateUserAccountResponse().setId(userAccount.getId());
     }
 
     // GET

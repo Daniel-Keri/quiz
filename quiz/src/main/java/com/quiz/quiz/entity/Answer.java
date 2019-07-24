@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Data
@@ -19,12 +20,14 @@ public class Answer {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private UUID id;
 
-    @Column(name = "text")
+    @NotNull
+    @Column(name = "text", nullable = false)
     private String text;
 
     @Column(name = "image")
     private String image;
 
-    @Column(name = "is_correct",nullable = false)
+    @NotNull
+    @Column(name = "is_correct", nullable = false)
     private Boolean isCorrect;
 }

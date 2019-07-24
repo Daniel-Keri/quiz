@@ -25,7 +25,7 @@ public class AdminAccountService {
         AdminAccount adminAccount = accountConverter.toAdminAccount(createAdminAccountRequest);
         adminAccountRepository.save(adminAccount);
 
-        return (CreateAdminAccountResponse) new CreateAdminAccountResponse().setId(adminAccount.getId());
+        return new CreateAdminAccountResponse().setId(adminAccount.getId());
     }
 
     public GetAdminAccountDataResponse getUserAccountData() {

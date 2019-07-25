@@ -28,7 +28,7 @@ public class AdminAccountController {
 
     // POST
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')") // MIGHT BE REDUNDANT DEPENDING ON SECURITY_CONFIG
+    //@PreAuthorize("hasRole('ROLE_ADMIN')") // MIGHT BE REDUNDANT DEPENDING ON SECURITY_CONFIG
     public CreateAdminAccountResponse createAdminAccount(@Validated @RequestBody CreateAdminAccountRequest createAdminAccountRequest){
 
         return adminAccountService.createAdminAccount(createAdminAccountRequest);

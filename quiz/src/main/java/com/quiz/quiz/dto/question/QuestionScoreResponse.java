@@ -16,5 +16,5 @@ public class QuestionScoreResponse {
 
     private String image;
 
-    private double userScore;
+    private UUID chosenAnswerId;
 }

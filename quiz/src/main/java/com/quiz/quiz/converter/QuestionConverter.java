@@ -1,12 +1,14 @@
 package com.quiz.quiz.converter;
 
-import com.quiz.quiz.dto.answer.CreateAnswerResponse;
-import com.quiz.quiz.dto.question.*;
+import com.quiz.quiz.dto.question.CreateQuestionRequest;
+import com.quiz.quiz.dto.question.CreateQuestionResponse;
+import com.quiz.quiz.dto.question.QuestionScoreResponse;
+import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,10 +17,10 @@ public class QuestionConverter {
 
     private final AnswerConverter answerConverter;
 
-    public QuestionScoreResponse toQuestionScoreResponse(Question question)
+    public QuestionScoreResponse toQuestionScoreResponse(Question question, UUID chosenAnswerId)
     {
         return new QuestionScoreResponse()
-                .setUserScore(question.getScore())
+                .setChosenAnswerId(chosenAnswerId)
                 .setText(question.getText())
                 .setImage(question.getImage())
                 .setId(question.getId());
@@ -33,7 +35,7 @@ public class QuestionConverter {
                         .collect(Collectors.toList()))
                 .setId(question.getId())
                 .setTheme(question.getTheme())
-                .setScore(question.getScore())
+                .setScore(question.getPoints())
                 .setImage(question.getImage())
                 .setText(question.getText());
     }
@@ -44,7 +46,7 @@ public class QuestionConverter {
                         .map(answerConverter::toAnswer)
                         .collect(Collectors.toList()))
                 .setTheme(createQuestionRequest.getTheme())
-                .setScore(createQuestionRequest.getScore())
+                .setPoints(createQuestionRequest.getScore())
                 .setImage(createQuestionRequest.getImage())
                 .setText(createQuestionRequest.getText());
     }

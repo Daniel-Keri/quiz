@@ -14,17 +14,15 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
     Optional<Question> findByTheme(String theme);
 
-    Optional<Question> findByScore(Double score);
+    Optional<Question> findByPoints(Double points);
 
     Page<Question> findAllByTheme(String theme, Pageable pageable);
 
     @Query("SELECT q.theme FROM Question q GROUP BY q.theme ORDER BY q.theme")
     List<String> findAllTheme();
 
-
 //    @Query("SELECT new com.quiz.quiz.dto.question.QuestionScoreResponse()")
 //    Page<Question> findAll();
-
 
     //Page<Question> findAll(Pageable pageable);
 /*

@@ -46,39 +46,39 @@ public class QuestionController {
 
     // GET
     @GetMapping("/themes")
-    public List<ThemeResponse> findAllByTheme() {
+    public List<ThemeResponse> findAllTheme() {
 
         return questionService.findAllTheme();
     }
 
-    @GetMapping("/findAllByTheme/{theme}")
+    @GetMapping("/byTheme/{theme}")
     public Page<QuestionScoreResponse> findAllByTheme(@PathVariable("theme") String theme, Pageable pageable) {
 
         return questionService.findAllByTheme(theme, pageable);
     }
 
-    @GetMapping("/findAllByThemeRandomized/{theme}")
+    @GetMapping("/byThemeRandomized/{theme}")
     public Page<QuestionScoreResponse> findAllByThemeRandomized(@PathVariable("theme") String theme, Pageable pageable) {
 
         return questionService.findAllByThemeRandomized(theme, pageable);
     }
 
     @GetMapping("/answers")
-    List<QuestionAnswerResponse> findAllQuestionAnswers(QuestionAnswerRequest questionAnswerRequest) {
+    List<QuestionAnswerResponse> findAllQuestionAnswers(@RequestParam(name = "id") UUID id) throws QuestionNotFoundException {
 
-        return questionService.findAllQuestionAnswers(questionAnswerRequest);
+        return questionService.findAllQuestionAnswers(id);
     }
 
     // DELETE
-    @DeleteMapping
+    @DeleteMapping("/deleteQuestion")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestion(UUID id) throws QuestionNotFoundException {
+    public void deleteQuestion(@RequestParam(name = "id") UUID id) throws QuestionNotFoundException {
         questionService.deleteQuestion(id);
     }
 
     @DeleteMapping("/deleteQuestions")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestions(List<UUID> ids) throws QuestionNotFoundException {
+    public void deleteQuestions(@RequestParam(name = "id") List<UUID> ids) throws QuestionNotFoundException {
         questionService.deleteQuestions(ids);
     }
 }

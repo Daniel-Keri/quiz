@@ -14,8 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 
 import static com.quiz.quiz.config.constants.URIConstants.*;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -57,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(SCOREBOARD + EVERY_SUBPATH).authenticated()
                 .antMatchers(ADMIN_ACCOUNT + EVERY_SUBPATH).authenticated()
                 .antMatchers(GET, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
+                .antMatchers(PATCH, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
                 .and()
                 .formLogin()
                 .and()

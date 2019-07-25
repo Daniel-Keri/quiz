@@ -1,9 +1,6 @@
 package com.quiz.quiz.converter;
 
-import com.quiz.quiz.dto.account.CreateAdminAccountRequest;
-import com.quiz.quiz.dto.account.CreateUserAccountRequest;
-import com.quiz.quiz.dto.account.GetAdminAccountDataResponse;
-import com.quiz.quiz.dto.account.GetUserAccountDataResponse;
+import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.entity.Account;
 import com.quiz.quiz.entity.AdminAccount;
 import com.quiz.quiz.entity.UserAccount;
@@ -38,7 +35,7 @@ public class AccountConverter {
 
     public GetUserAccountDataResponse toGetUserAccountDataResponse(Account account) {
 
-        return (GetUserAccountDataResponse) new GetUserAccountDataResponse()
+        return new GetUserAccountDataResponse()
                 .setId(account.getId())
                 .setRole(account.getRole())
                 .setUsername(account.getUsername())
@@ -47,10 +44,22 @@ public class AccountConverter {
 
     public GetAdminAccountDataResponse toGetAdminAccountDataResponse(Account account) {
 
-        return (GetAdminAccountDataResponse) new GetAdminAccountDataResponse()
+        return new GetAdminAccountDataResponse()
                 .setId(account.getId())
                 .setRole(account.getRole())
                 .setUsername(account.getUsername())
                 .setEmail(account.getEmail());
+    }
+    public UpdateAdminAccountResponse toUpdateAdminAccountResponse(AdminAccount adminAccount){
+
+        return new UpdateAdminAccountResponse()
+                .setPassword(adminAccount.getPassword())
+                .setUsername(adminAccount.getUsername());
+    }
+    public UpdateUserAccountResponse toUpdateUserAccountResponse(UserAccount userAccount){
+
+        return new UpdateUserAccountResponse()
+                .setPassword(userAccount.getPassword())
+                .setUsername(userAccount.getUsername());
     }
 }

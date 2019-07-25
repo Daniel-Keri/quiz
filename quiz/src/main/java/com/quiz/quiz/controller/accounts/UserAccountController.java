@@ -30,7 +30,8 @@ public class UserAccountController {
     protected void initupdateUserAccountRequestValidatorBinder(WebDataBinder binder) {
         binder.addValidators(updateAccountRequestValidator);
     }
-    
+
+
     // POST
     @PostMapping
     public CreateUserAccountResponse createUserAccount(@Validated @RequestBody CreateUserAccountRequest createUserAccountRequest){

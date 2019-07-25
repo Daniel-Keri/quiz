@@ -32,5 +32,4 @@ public class ScoreboardController {
 
         return scoreboardService.getScoreBoard();
     }
-
 }

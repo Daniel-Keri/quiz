@@ -1,16 +1,18 @@
 package com.quiz.quiz.services.accounts;
 
 import com.quiz.quiz.converter.AccountConverter;
-import com.quiz.quiz.dto.account.CreateUserAccountResponse;
-import com.quiz.quiz.dto.account.CreateUserAccountRequest;
-import com.quiz.quiz.dto.account.GetUserAccountDataResponse;
+import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.entity.Account;
 import com.quiz.quiz.entity.UserAccount;
 import com.quiz.quiz.exceptions.AccountNotFoundException;
 import com.quiz.quiz.repository.accounts.AccountRepository;
+import com.quiz.quiz.repository.accounts.AdminAccountRepository;
 import com.quiz.quiz.repository.accounts.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +21,8 @@ public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
     private final AccountRepository accountRepository;
     private final AccountConverter accountConverter;
+
+
 
     // POST
     public CreateUserAccountResponse createUserAccount(CreateUserAccountRequest createUserAccountRequest){
@@ -32,8 +36,25 @@ public class UserAccountService {
     // GET
     public GetUserAccountDataResponse getUserAccountData() {
 
-        Account account = accountRepository.getAccountData().orElseThrow(AccountNotFoundException::new);
+       // Account account = accountRepository.getAccountData().orElseThrow(AccountNotFoundException::new);
+        UserAccount userAccount=userAccountRepository.getUserAccountData().orElseThrow(AccountNotFoundException::new);
 
-        return accountConverter.toGetUserAccountDataResponse(account);
+        return accountConverter.toGetUserAccountDataResponse(userAccount);
+    }
+
+    //UPDATE
+    @Transactional
+    public UpdateUserAccountResponse updateUserAccount(UpdateUserAccountRequest updateUserAccountRequest) throws AccountNotFoundException
+    {
+        UserAccount userAccount = userAccountRepository.getUserAccountData().orElseThrow(AccountNotFoundException::new);
+
+        if (updateUserAccountRequest.getPassword()!=null){
+            userAccount.setPassword(new BCryptPasswordEncoder().encode(updateUserAccountRequest.getPassword()));
+        }
+        if (updateUserAccountRequest.getUsername()!=null){
+            userAccount.setUsername(updateUserAccountRequest.getUsername());
+        }
+        accountRepository.save(userAccount);
+        return accountConverter.toUpdateUserAccountResponse(userAccount);
     }
 }

@@ -48,4 +48,10 @@ public class QuestionConverter {
                 .setImage(createQuestionRequest.getImage())
                 .setText(createQuestionRequest.getText());
     }
+
+    public ThemeResponse toThemeResponse(String theme) {
+
+        return new ThemeResponse()
+                .setTheme(theme);
+    }
 }

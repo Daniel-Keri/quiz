@@ -7,6 +7,7 @@ import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.QuestionScoreResponse;
+import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.entity.Question;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
@@ -40,6 +41,13 @@ public class QuestionService {
     }
 
     //GET
+    public List<ThemeResponse> findAllTheme() {
+
+        return questionRepository.findAllTheme().stream()
+                .map(questionConverter::toThemeResponse)
+                .collect(Collectors.toList());
+    }
+
     public Page<QuestionScoreResponse> findAllByTheme(String theme, Pageable pageable) {
 
         Page<Question> questionPage = questionRepository.findAllByTheme(theme, pageable);

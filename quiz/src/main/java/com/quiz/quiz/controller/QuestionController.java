@@ -6,6 +6,7 @@ import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.QuestionScoreResponse;
+import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
 import com.quiz.quiz.services.QuestionService;
 import com.quiz.quiz.validation.requestValidators.CreateQuestionRequestValidator;
@@ -44,6 +45,12 @@ public class QuestionController {
     }
 
     // GET
+    @GetMapping("/themes")
+    public List<ThemeResponse> findAllByTheme() {
+
+        return questionService.findAllTheme();
+    }
+
     @GetMapping("/findAllByTheme/{theme}")
     public Page<QuestionScoreResponse> findAllByTheme(@PathVariable("theme") String theme, Pageable pageable) {
 

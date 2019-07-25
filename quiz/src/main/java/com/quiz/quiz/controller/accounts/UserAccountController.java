@@ -1,11 +1,10 @@
 package com.quiz.quiz.controller.accounts;
 
 
-import com.quiz.quiz.dto.account.CreateUserAccountResponse;
-import com.quiz.quiz.dto.account.CreateUserAccountRequest;
-import com.quiz.quiz.dto.account.GetUserAccountDataResponse;
+import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.services.accounts.UserAccountService;
-import com.quiz.quiz.validation.requestValidators.account.UserAccountRequestValidator;
+import com.quiz.quiz.validation.requestValidators.account.AccountRequestValidator;
+import com.quiz.quiz.validation.requestValidators.account.UpdateUserAccountRequestValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,12 +19,18 @@ import static com.quiz.quiz.config.constants.URIConstants.USER_ACCOUNT;
 public class UserAccountController {
 
     private final UserAccountService userAccountService;
-    private final UserAccountRequestValidator userAccountRequestValidator;
+    private final AccountRequestValidator accountRequestValidator;
+    private final UpdateUserAccountRequestValidator updateAccountRequestValidator;
 
     @InitBinder("createUserAccountRequest")
     protected void initCreateUserAccountRequestValidatorBinder(WebDataBinder binder) {
-        binder.addValidators(userAccountRequestValidator);
+        binder.addValidators(accountRequestValidator);
     }
+    @InitBinder("updateUserRequestValidator")
+    protected void initupdateUserAccountRequestValidatorBinder(WebDataBinder binder) {
+        binder.addValidators(updateAccountRequestValidator);
+    }
+
 
     // POST
     @PostMapping
@@ -39,5 +44,11 @@ public class UserAccountController {
     public GetUserAccountDataResponse getUserAccountData() {
 
         return userAccountService.getUserAccountData();
+    }
+    //PATCH
+    @PatchMapping("/update")
+    public UpdateUserAccountResponse updateUserAccount(@Validated @RequestBody UpdateUserAccountRequest updateUserAccountRequest){
+
+        return userAccountService.updateUserAccount(updateUserAccountRequest);
     }
 }

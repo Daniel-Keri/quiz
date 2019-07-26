@@ -35,6 +35,16 @@ public class CreateQuestionRequestValidator implements Validator {
             if (createAnswerRequests.isEmpty()) {
                 errors.rejectValue("answers", "REQUIRED", "invalid answers");
             }
+
+            int correctAnswerCount = 0;
+            for (CreateAnswerRequest s : createAnswerRequests) {
+                if(s.getIsCorrect()) {
+                    correctAnswerCount++;
+                }
+            }
+            if (correctAnswerCount > 1 || correctAnswerCount == 0) {
+                errors.rejectValue("answers", "INCORRECT_NUMBER_OF_CORRECT_ANSWERS", "invalid answers");
+            }
         }
     }
 }

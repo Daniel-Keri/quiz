@@ -64,6 +64,7 @@ public class QuestionService {
         return new PageImpl<>(questionList, pageable, questionList.size());
     }
 
+    // TODO returning Page instead of List (?)
     public List<QuestionAnswerResponse> findAllQuestionAnswers(UUID id) throws QuestionNotFoundException {
 
         List<Answer> answers = questionRepository
@@ -78,10 +79,19 @@ public class QuestionService {
 
     // DELETE
     public void deleteQuestion(UUID id) throws QuestionNotFoundException {
+
         questionRepository.delete(questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new));
     }
 
     public void deleteQuestions(List<UUID> ids) throws QuestionNotFoundException {
-        questionRepository.findAllById(ids).forEach(questionRepository::delete);
+
+        List<Question> questions = questionRepository.findAllById(ids);
+
+        if (questions.isEmpty()) {
+            throw new QuestionNotFoundException();
+        }
+        else {
+            questions.forEach(questionRepository::delete);
+        }
     }
 }

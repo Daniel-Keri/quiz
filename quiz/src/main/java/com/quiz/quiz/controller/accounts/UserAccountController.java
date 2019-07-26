@@ -15,7 +15,7 @@ import static com.quiz.quiz.config.constants.URIConstants.USER_ACCOUNT;
 @RestController
 @RequestMapping(USER_ACCOUNT)
 @RequiredArgsConstructor
-// ONLY 'GET' REQUEST TYPE PATH IS LINKED TO AUTHORIZATION (in securityConfig) HERE!
+// ONLY 'GET' AND 'PATCH' REQUEST TYPE PATH IS LINKED TO AUTHORIZATION (in securityConfig) HERE!
 public class UserAccountController {
 
     private final UserAccountService userAccountService;
@@ -45,7 +45,8 @@ public class UserAccountController {
 
         return userAccountService.getUserAccountData();
     }
-    //PATCH
+
+    // PATCH
     @PatchMapping("/update")
     public UpdateUserAccountResponse updateUserAccount(@Validated @RequestBody UpdateUserAccountRequest updateUserAccountRequest){
 

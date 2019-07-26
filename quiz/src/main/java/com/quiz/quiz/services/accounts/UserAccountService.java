@@ -38,7 +38,7 @@ public class UserAccountService {
         return accountConverter.toGetUserAccountDataResponse(userAccount);
     }
 
-    //UPDATE
+    // UPDATE
     @Transactional
     public UpdateUserAccountResponse updateUserAccount(UpdateUserAccountRequest updateUserAccountRequest) throws AccountNotFoundException
     {

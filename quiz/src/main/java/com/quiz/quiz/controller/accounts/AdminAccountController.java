@@ -46,7 +46,8 @@ public class AdminAccountController {
 
         return adminAccountService.getAdminAccountData();
     }
-    //PATCH
+
+    // PATCH
     @PatchMapping("/update")
     public UpdateAdminAccountResponse updateAdmin(@Validated @RequestBody UpdateAdminAccountRequest updateAccountRequest){
 

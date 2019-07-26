@@ -34,14 +34,14 @@ public class QuestionService {
     private final AnswerConverter answerConverter;
     private final QuestionRepository questionRepository;
 
-    //SAVE
+    // POST
     public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest){
 
         return questionConverter.toCreateQuestionResponse(
                 questionRepository.save(questionConverter.toCreateQuestion(createQuestionRequest)));
     }
 
-    //GET
+    // GET
     public List<ThemeResponse> findAllTheme() {
 
         return questionRepository.findAllTheme().stream()
@@ -76,7 +76,7 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    //DELETE
+    // DELETE
     public void deleteQuestion(UUID id) throws QuestionNotFoundException {
         questionRepository.delete(questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new));
     }

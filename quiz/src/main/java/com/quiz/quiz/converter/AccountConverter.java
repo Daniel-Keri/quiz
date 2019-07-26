@@ -53,13 +53,11 @@ public class AccountConverter {
     public UpdateAdminAccountResponse toUpdateAdminAccountResponse(AdminAccount adminAccount){
 
         return new UpdateAdminAccountResponse()
-                .setPassword(adminAccount.getPassword())
                 .setUsername(adminAccount.getUsername());
     }
     public UpdateUserAccountResponse toUpdateUserAccountResponse(UserAccount userAccount){
 
         return new UpdateUserAccountResponse()
-                .setPassword(userAccount.getPassword())
                 .setUsername(userAccount.getUsername());
     }
 }

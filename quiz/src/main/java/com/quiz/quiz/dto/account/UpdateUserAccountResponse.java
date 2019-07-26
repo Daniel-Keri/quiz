@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain=true)
 public class UpdateUserAccountResponse {
 
-    private String password;
+
 
     private String username;
 }

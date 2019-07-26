@@ -19,10 +19,7 @@ import javax.transaction.Transactional;
 public class UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
-    private final AccountRepository accountRepository;
     private final AccountConverter accountConverter;
-
-
 
     // POST
     public CreateUserAccountResponse createUserAccount(CreateUserAccountRequest createUserAccountRequest){
@@ -36,7 +33,6 @@ public class UserAccountService {
     // GET
     public GetUserAccountDataResponse getUserAccountData() {
 
-       // Account account = accountRepository.getAccountData().orElseThrow(AccountNotFoundException::new);
         UserAccount userAccount=userAccountRepository.getUserAccountData().orElseThrow(AccountNotFoundException::new);
 
         return accountConverter.toGetUserAccountDataResponse(userAccount);
@@ -54,7 +50,7 @@ public class UserAccountService {
         if (updateUserAccountRequest.getUsername()!=null){
             userAccount.setUsername(updateUserAccountRequest.getUsername());
         }
-        accountRepository.save(userAccount);
+        userAccountRepository.save(userAccount);
         return accountConverter.toUpdateUserAccountResponse(userAccount);
     }
 }

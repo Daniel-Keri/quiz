@@ -34,9 +34,7 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
             "OR (" +
             "aq.userAccountId IS NOT NULL " +
             "AND " +
-            "aq.userAccountId = ?#{principal.id}" +
-            ")" +
-            ")" +
+            "aq.userAccountId = ?#{principal.id}))" +
             "ORDER BY aq.chosenAnswerId DESC")
     List<AllQuestionByThemeResponse> getAllQuestionsByThemeResponses(String theme);
 }

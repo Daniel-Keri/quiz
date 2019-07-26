@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(QUESTION + EVERY_SUBPATH).authenticated()
                 .antMatchers(SCOREBOARD + EVERY_SUBPATH).authenticated()
-                .antMatchers(ADMIN_ACCOUNT + EVERY_SUBPATH).authenticated()
+                //.antMatchers(ADMIN_ACCOUNT + EVERY_SUBPATH).authenticated()
                 .antMatchers(GET, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
                 .antMatchers(PATCH, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
                 .and()

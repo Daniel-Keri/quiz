@@ -2,25 +2,27 @@ package com.quiz.quiz.services;
 
 import com.quiz.quiz.converter.AnswerConverter;
 import com.quiz.quiz.converter.QuestionConverter;
-import com.quiz.quiz.dto.answer.QuestionAnswerRequest;
 import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
+import com.quiz.quiz.dto.question.AllQuestionByThemeResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
-import com.quiz.quiz.dto.question.QuestionScoreResponse;
+import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Answer;
+import com.quiz.quiz.entity.AnsweredQuestion;
 import com.quiz.quiz.entity.Question;
+import com.quiz.quiz.exceptions.AccountNotFoundException;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
+import com.quiz.quiz.repository.AnsweredQuestionsRepository;
 import com.quiz.quiz.repository.QuestionRepository;
+import com.quiz.quiz.repository.accounts.AccountRepository;
+import com.quiz.quiz.repository.accounts.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -40,43 +42,32 @@ public class QuestionService {
     }
 
     //GET
-    public Page<QuestionScoreResponse> findAllByTheme(String theme, Pageable pageable) {
+    public List<ThemeResponse> findAllTheme() {
 
-        Page<Question> questionPage = questionRepository.findAllByTheme(theme, pageable);
-
-        List<Question> questionList = questionPage.getContent();
-
-        Page<QuestionScoreResponse> questionScoreResponsePage = new PageImpl<>(
-                questionList.stream()
-                        .map(questionConverter::toQuestionScoreResponse)
-                        .collect(Collectors.toList()),
-                pageable,
-                questionList.size());
-
-        return questionScoreResponsePage;
+        return questionRepository.findAllTheme().stream()
+                .map(questionConverter::toThemeResponse)
+                .collect(Collectors.toList());
     }
 
-    public Page<QuestionScoreResponse> findAllByThemeRandomized(String theme, Pageable pageable) {
+    public Page<AllQuestionByThemeResponse> findAllByTheme(String theme, Pageable pageable) {
 
-        Page<Question> questionPage = questionRepository.findAllByTheme(theme, pageable);
+        List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme);
 
-        List<Question> questionList = new ArrayList<>(questionPage.getContent());
+        return new PageImpl<>(questionList, pageable, questionList.size());
+    }
+
+    public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(String theme, Pageable pageable) {
+
+        List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme);
         Collections.shuffle(questionList);
 
-        Page<QuestionScoreResponse> questionScoreResponsePage = new PageImpl<>(
-                questionList.stream()
-                        .map(questionConverter::toQuestionScoreResponse)
-                        .collect(Collectors.toList()),
-                pageable,
-                questionList.size());
-
-        return questionScoreResponsePage;
+        return new PageImpl<>(questionList, pageable, questionList.size());
     }
 
-    public List<QuestionAnswerResponse> findAllQuestionAnswers(QuestionAnswerRequest questionAnswerRequest) {
+    public List<QuestionAnswerResponse> findAllQuestionAnswers(UUID id) throws QuestionNotFoundException {
 
         List<Answer> answers = questionRepository
-                .findById(questionAnswerRequest.getId())
+                .findById(id)
                 .orElseThrow(QuestionNotFoundException::new)
                 .getAnswers();
 

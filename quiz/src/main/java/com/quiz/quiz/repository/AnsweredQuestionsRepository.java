@@ -1,7 +1,6 @@
 package com.quiz.quiz.repository;
 
 import com.quiz.quiz.entity.AnsweredQuestion;
-import com.quiz.quiz.entity.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

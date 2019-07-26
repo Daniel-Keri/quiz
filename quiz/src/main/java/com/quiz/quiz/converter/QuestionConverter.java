@@ -1,14 +1,10 @@
 package com.quiz.quiz.converter;
 
-import com.quiz.quiz.dto.question.CreateQuestionRequest;
-import com.quiz.quiz.dto.question.CreateQuestionResponse;
-import com.quiz.quiz.dto.question.QuestionScoreResponse;
-import com.quiz.quiz.dto.question.ThemeResponse;
+import com.quiz.quiz.dto.question.*;
 import com.quiz.quiz.entity.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,17 +13,7 @@ public class QuestionConverter {
 
     private final AnswerConverter answerConverter;
 
-    public QuestionScoreResponse toQuestionScoreResponse(Question question, UUID chosenAnswerId)
-    {
-        return new QuestionScoreResponse()
-                .setChosenAnswerId(chosenAnswerId)
-                .setText(question.getText())
-                .setImage(question.getImage())
-                .setId(question.getId());
-    }
-
     public CreateQuestionResponse toCreateQuestionResponse(Question question) {
-
 
         return new CreateQuestionResponse()
                 .setAnswers(question.getAnswers().stream()

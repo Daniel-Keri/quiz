@@ -18,7 +18,6 @@ import javax.transaction.Transactional;
 public class AdminAccountService {
 
     private final AdminAccountRepository adminAccountRepository;
-    private final AccountRepository accountRepository;
     private final AccountConverter accountConverter;
 
     public CreateAdminAccountResponse createAdminAccount(CreateAdminAccountRequest createAdminAccountRequest) {
@@ -47,7 +46,7 @@ public class AdminAccountService {
         if (updateAdminAccountRequest.getUsername()!=null){
             adminAccount.setUsername(updateAdminAccountRequest.getUsername());
         }
-        accountRepository.save(adminAccount);
+        adminAccountRepository.save(adminAccount);
         return accountConverter.toUpdateAdminAccountResponse(adminAccount);
     }
 }

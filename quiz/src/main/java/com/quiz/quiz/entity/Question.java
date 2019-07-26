@@ -43,7 +43,7 @@ public class Question {
     private String image;
 
     @NotNull
-    @Column(name = "score", nullable = false)
-    private double score;
+    @Column(name = "points", nullable = false)
+    private Double points;
 
 }

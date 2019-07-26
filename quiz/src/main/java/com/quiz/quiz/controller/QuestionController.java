@@ -1,11 +1,11 @@
 package com.quiz.quiz.controller;
 
 
-import com.quiz.quiz.dto.answer.QuestionAnswerRequest;
 import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
+import com.quiz.quiz.dto.question.AllQuestionByThemeResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
-import com.quiz.quiz.dto.question.QuestionScoreResponse;
+import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
 import com.quiz.quiz.services.QuestionService;
 import com.quiz.quiz.validation.requestValidators.CreateQuestionRequestValidator;
@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,34 +45,40 @@ public class QuestionController {
     }
 
     // GET
-    @GetMapping("/findAllByTheme/{theme}")
-    public Page<QuestionScoreResponse> findAllByTheme(@PathVariable("theme") String theme, Pageable pageable) {
+    @GetMapping("/themes")
+    public List<ThemeResponse> findAllTheme() {
+
+        return questionService.findAllTheme();
+    }
+
+    @GetMapping("/byTheme/{theme}")
+    public Page<AllQuestionByThemeResponse> findAllByTheme(@PathVariable("theme") String theme, Pageable pageable) {
 
         return questionService.findAllByTheme(theme, pageable);
     }
 
-    @GetMapping("/findAllByThemeRandomized/{theme}")
-    public Page<QuestionScoreResponse> findAllByThemeRandomized(@PathVariable("theme") String theme, Pageable pageable) {
+    @GetMapping("/byThemeRandomized/{theme}")
+    public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(@PathVariable("theme") String theme, Pageable pageable) {
 
         return questionService.findAllByThemeRandomized(theme, pageable);
     }
 
     @GetMapping("/answers")
-    List<QuestionAnswerResponse> findAllQuestionAnswers(QuestionAnswerRequest questionAnswerRequest) {
+    List<QuestionAnswerResponse> findAllQuestionAnswers(@RequestParam(name = "id") UUID id) throws QuestionNotFoundException {
 
-        return questionService.findAllQuestionAnswers(questionAnswerRequest);
+        return questionService.findAllQuestionAnswers(id);
     }
 
     // DELETE
-    @DeleteMapping
+    @DeleteMapping("/deleteQuestion")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestion(UUID id) throws QuestionNotFoundException {
+    public void deleteQuestion(@RequestParam(name = "id") UUID id) throws QuestionNotFoundException {
         questionService.deleteQuestion(id);
     }
 
     @DeleteMapping("/deleteQuestions")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestions(List<UUID> ids) throws QuestionNotFoundException {
+    public void deleteQuestions(@RequestParam(name = "id") List<UUID> ids) throws QuestionNotFoundException {
         questionService.deleteQuestions(ids);
     }
 }

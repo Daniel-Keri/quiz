@@ -12,7 +12,7 @@ import static com.quiz.quiz.validation.constants.ValidatorConstants.EMAIL_PATTER
 
 @RequiredArgsConstructor
 @Component
-public class UserAccountRequestValidator implements Validator {
+public class AccountRequestValidator implements Validator {
 
     private final AccountRepository accountRepository;
 

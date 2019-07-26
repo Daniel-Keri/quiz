@@ -17,6 +17,7 @@ public class ScoreboardService {
     private final ScoreboardRepository scoreboardRepository;
     private final ScoreboardConverter scoreboardConverter;
 
+    // GET
     public List<ScoreboardResponse> getScoreboardByTheme(String theme) throws ScoreboardNotFoundException {
 
         return scoreboardRepository.getScoreboardByTheme(theme).stream()

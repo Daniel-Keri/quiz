@@ -34,7 +34,8 @@ public class AdminAccountService {
 
         return accountConverter.toGetAdminAccountDataResponse(adminAccount);
     }
-    //UPDATE
+
+    // UPDATE
     @Transactional
     public UpdateAdminAccountResponse updateAdminAccount(UpdateAdminAccountRequest updateAdminAccountRequest) throws AccountNotFoundException
     {

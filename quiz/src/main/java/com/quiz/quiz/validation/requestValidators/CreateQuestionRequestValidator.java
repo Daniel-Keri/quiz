@@ -33,11 +33,14 @@ public class CreateQuestionRequestValidator implements Validator {
 
         List<CreateAnswerRequest> createAnswerRequests = createQuestionRequest.getAnswers();
 
-        if (createAnswerRequests != null || createAnswerRequests.isEmpty()) {
+        if (createAnswerRequests == null || createAnswerRequests.isEmpty()) {
             errors.rejectValue("answers", "REQUIRED", "invalid answers");
-        } else if (createAnswerRequests.size() < MIN_ANSWER || createAnswerRequests.size() > MAX_ANSWER) {
-            errors.rejectValue("answers", "INVALID", String.format(
-                    "Incorrect number of answers. The minimum is: %s and the maximum is: %s", MIN_ANSWER, MAX_ANSWER));
+        }
+        else {
+            if (createAnswerRequests.size() < MIN_ANSWER || createAnswerRequests.size() > MAX_ANSWER) {
+                errors.rejectValue("answers", "INVALID", String.format(
+                        "Incorrect number of answers. The minimum is: %s and the maximum is: %s", MIN_ANSWER, MAX_ANSWER));
+            }
 
             int count = 0;
             for (CreateAnswerRequest answer : createAnswerRequests) {

@@ -31,10 +31,18 @@ public class ScoreboardService {
 
     public Page<ScoreboardResponse> getScoreBoard(Pageable pageable) {
 
-        List<ScoreboardResponse> scoreboardResponses = scoreboardRepository.findAll().stream()
+        List<ScoreboardResponse> scoreboardResponses = scoreboardRepository.findAllOrderedByThemeThenScore().stream()
                 .map(scoreboardConverter::toScoreboardResponse)
                 .collect(Collectors.toList());
 
         return new PageImpl<>(scoreboardResponses, pageable, scoreboardResponses.size());
+    }
+
+    public List<ScoreboardResponse> getScoreBoard2() {
+
+        return scoreboardRepository.findAllOrderedByThemeThenScore()
+                .stream()
+                .map(scoreboardConverter::toScoreboardResponse)
+                .collect(Collectors.toList());
     }
 }

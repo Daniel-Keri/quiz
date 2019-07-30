@@ -8,21 +8,17 @@ import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Answer;
-import com.quiz.quiz.entity.AnsweredQuestion;
-import com.quiz.quiz.entity.Question;
-import com.quiz.quiz.exceptions.AccountNotFoundException;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
-import com.quiz.quiz.repository.AnsweredQuestionsRepository;
 import com.quiz.quiz.repository.QuestionRepository;
-import com.quiz.quiz.repository.accounts.AccountRepository;
-import com.quiz.quiz.repository.accounts.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -55,7 +51,7 @@ public class QuestionService {
 
         List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme);
 
-        return new PageImpl<>(questionList, pageable, questionList.size());
+        return (new PageImpl<>(questionList, pageable, questionList.size()));
     }
 
     public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(String theme, Pageable pageable) {

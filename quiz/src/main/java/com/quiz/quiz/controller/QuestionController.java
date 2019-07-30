@@ -45,9 +45,9 @@ public class QuestionController {
 
     // GET
     @GetMapping("/themes")
-    public List<ThemeResponse> findAllTheme() {
+    public Page<ThemeResponse> findAllTheme(Pageable pageable) {
 
-        return questionService.findAllTheme();
+        return questionService.findAllTheme(pageable);
     }
 
     @GetMapping("/byTheme/{theme}")
@@ -63,9 +63,9 @@ public class QuestionController {
     }
 
     @GetMapping("/answers")
-    List<QuestionAnswerResponse> findAllQuestionAnswers(@RequestParam(name = "id") UUID id) throws QuestionNotFoundException {
+    Page<QuestionAnswerResponse> findAllQuestionAnswers(@RequestParam(name = "id") UUID id, Pageable pageable) throws QuestionNotFoundException {
 
-        return questionService.findAllQuestionAnswers(id);
+        return questionService.findAllQuestionAnswers(id,pageable);
     }
 
     // DELETE

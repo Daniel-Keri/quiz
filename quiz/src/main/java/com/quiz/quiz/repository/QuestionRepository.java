@@ -1,5 +1,6 @@
 package com.quiz.quiz.repository;
 
+import com.quiz.quiz.dto.answer.QuestionAnswerResponse;
 import com.quiz.quiz.dto.question.AllQuestionByThemeResponse;
 import com.quiz.quiz.entity.Question;
 import org.springframework.data.domain.Page;

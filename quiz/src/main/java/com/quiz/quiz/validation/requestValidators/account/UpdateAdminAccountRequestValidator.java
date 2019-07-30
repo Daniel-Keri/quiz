@@ -23,14 +23,14 @@ public class UpdateAdminAccountRequestValidator implements Validator {
         UpdateAdminAccountRequest updateAdminAccountRequest = (UpdateAdminAccountRequest) object;
 
         if (updateAdminAccountRequest.getUsername()!=null ) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "REQUIRED", "the username must not be null or empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "REQUIRED", "The username must not be null or empty");
         }
         if (updateAdminAccountRequest.getPassword()!=null) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "REQUIRED", "the password must not be null or empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "REQUIRED", "The password must not be null or empty");
         }
         if (updateAdminAccountRequest.getPassword()!=null && updateAdminAccountRequest.getUsername()!=null){
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "REQUIRED", "the password must not be null or empty");
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "REQUIRED", "the username must not be null or empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "REQUIRED", "The password must not be null or empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "REQUIRED", "The username must not be null or empty");
         }
 
     }

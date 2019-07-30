@@ -35,18 +35,20 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
 
     // POST
-    public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest){
+    public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest) {
 
         return questionConverter.toCreateQuestionResponse(
                 questionRepository.save(questionConverter.toCreateQuestion(createQuestionRequest)));
     }
 
     // GET
-    public List<ThemeResponse> findAllTheme() {
+    public Page<ThemeResponse> findAllTheme(Pageable pageable) {
 
-        return questionRepository.findAllTheme().stream()
+        List<ThemeResponse> themeResponses= questionRepository.findAllTheme().stream()
                 .map(questionConverter::toThemeResponse)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(themeResponses,pageable,themeResponses.size()) ;
     }
 
     public Page<AllQuestionByThemeResponse> findAllByTheme(String theme, Pageable pageable) {
@@ -64,17 +66,18 @@ public class QuestionService {
         return new PageImpl<>(questionList, pageable, questionList.size());
     }
 
-    // TODO returning Page instead of List (?)
-    public List<QuestionAnswerResponse> findAllQuestionAnswers(UUID id) throws QuestionNotFoundException {
+    public Page<QuestionAnswerResponse> findAllQuestionAnswers(UUID id, Pageable pageable) throws QuestionNotFoundException {
 
         List<Answer> answers = questionRepository
                 .findById(id)
                 .orElseThrow(QuestionNotFoundException::new)
                 .getAnswers();
 
-        return answers.stream()
+        List<QuestionAnswerResponse> questionAnswerResponses = answers.stream()
                 .map(answerConverter::toQuestionAnswerResponse)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(questionAnswerResponses, pageable, answers.size());
     }
 
     // DELETE
@@ -89,8 +92,7 @@ public class QuestionService {
 
         if (questions.isEmpty()) {
             throw new QuestionNotFoundException();
-        }
-        else {
+        } else {
             questions.forEach(questionRepository::delete);
         }
     }

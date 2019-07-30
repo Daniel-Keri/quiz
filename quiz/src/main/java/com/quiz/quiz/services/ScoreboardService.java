@@ -5,6 +5,9 @@ import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
 import com.quiz.quiz.exceptions.ScoreboardNotFoundException;
 import com.quiz.quiz.repository.ScoreboardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,17 +21,20 @@ public class ScoreboardService {
     private final ScoreboardConverter scoreboardConverter;
 
     // GET
-    public List<ScoreboardResponse> getScoreboardByTheme(String theme) throws ScoreboardNotFoundException {
+    public Page<ScoreboardResponse> getScoreboardByTheme(String theme, Pageable pageable) throws ScoreboardNotFoundException {
 
-        return scoreboardRepository.getScoreboardByTheme(theme).stream()
+        List<ScoreboardResponse> scoreboardResponses = scoreboardRepository.getScoreboardByTheme(theme).stream()
                 .map(scoreboardConverter::toScoreboardResponse)
                 .collect(Collectors.toList());
+        return new PageImpl<>(scoreboardResponses, pageable, scoreboardResponses.size());
     }
 
-    public List<ScoreboardResponse> getScoreBoard() {
+    public Page<ScoreboardResponse> getScoreBoard(Pageable pageable) {
 
-        return scoreboardRepository.findAll().stream()
+        List<ScoreboardResponse> scoreboardResponses = scoreboardRepository.findAll().stream()
                 .map(scoreboardConverter::toScoreboardResponse)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(scoreboardResponses, pageable, scoreboardResponses.size());
     }
 }

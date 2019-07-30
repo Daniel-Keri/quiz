@@ -17,7 +17,7 @@ public class CreateQuestionRequest {
 
     //private UUID id;
 
-    private double score;
+    private Double points;
 
     private String theme;
 

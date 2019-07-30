@@ -26,15 +26,10 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
     @Query("SELECT new com.quiz.quiz.dto.question.AllQuestionByThemeResponse(q.id, aq.chosenAnswerId, q.text, q.image) " +
             "FROM com.quiz.quiz.entity.Question q LEFT JOIN AnsweredQuestion aq " +
-            "ON q.id = aq.questionId " +
-            "WHERE " +
-            "q.theme = ?1 " +
-            "AND (" +
-            "aq.userAccountId IS NULL " +
-            "OR (" +
-            "aq.userAccountId IS NOT NULL " +
-            "AND " +
-            "aq.userAccountId = ?#{principal.id}))" +
+            "ON q.id = aq.questionId AND (" +
+            //"aq.userAccountId IS NULL OR " +
+            "aq.userAccountId = ?#{principal.id})" +
+            "WHERE q.theme = ?1 " +
             "ORDER BY aq.chosenAnswerId DESC")
     List<AllQuestionByThemeResponse> getAllQuestionsByThemeResponses(String theme);
 }

@@ -26,19 +26,19 @@ public class AccountRequestValidator implements Validator {
 
         CreateUserAccountRequest createUserAccountRequest = (CreateUserAccountRequest) object;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "REQUIRED", "the email must not be null or empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "REQUIRED", "The email must not be null or empty");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "REQUIRED", "the password must not be null or empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "REQUIRED", "The password must not be null or empty");
 
         String email = createUserAccountRequest.getEmail();
 
         if (email != null) {
             if (!isValidEmail(email)) {
-                errors.rejectValue("email", "REQUIRED", "invalid email");
+                errors.rejectValue("email", "REQUIRED", "Invalid email");
             }
 
             if (accountRepository.findByEmail(email).isPresent()) {
-                errors.rejectValue("email", "ALREADY_EXISTS", "EMAIL ALREADY EXISTS");
+                errors.rejectValue("email", "ALREADY_EXISTS", "Email already exists");
             }
         }
     }

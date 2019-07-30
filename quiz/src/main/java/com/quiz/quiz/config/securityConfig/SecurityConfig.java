@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PATCH, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .logoutUrl("/logout")

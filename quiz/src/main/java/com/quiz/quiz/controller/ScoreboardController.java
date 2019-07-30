@@ -4,6 +4,8 @@ import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
 import com.quiz.quiz.exceptions.ScoreboardNotFoundException;
 import com.quiz.quiz.services.ScoreboardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +21,17 @@ public class ScoreboardController {
     private final ScoreboardService scoreboardService;
 
     // GET
-    @GetMapping("/findByTheme")
+    @GetMapping("/byTheme/{theme}")
     @ResponseBody
-    public List<ScoreboardResponse> getScoreboardByTheme(@RequestParam(name = "theme") String theme) throws ScoreboardNotFoundException {
+    public Page<ScoreboardResponse> getScoreboardByTheme(@PathVariable("theme") String theme, Pageable pageable) throws ScoreboardNotFoundException {
 
-        return scoreboardService.getScoreboardByTheme(theme);
+        return scoreboardService.getScoreboardByTheme(theme, pageable);
     }
 
     @GetMapping
     @ResponseBody
-    public List<ScoreboardResponse> getScoreBoard() {
+    public Page<ScoreboardResponse> getScoreBoard(Pageable pageable) {
 
-        return scoreboardService.getScoreBoard();
+        return scoreboardService.getScoreBoard(pageable);
     }
 }

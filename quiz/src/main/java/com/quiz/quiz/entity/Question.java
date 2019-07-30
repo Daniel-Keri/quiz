@@ -35,7 +35,7 @@ public class Question {
     private String theme;
 
     @NotNull
-    @OneToMany(cascade = ALL, orphanRemoval = true)
+    @OneToMany(cascade = ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id", nullable = false)
     private List<Answer> answers = new ArrayList<>();
 

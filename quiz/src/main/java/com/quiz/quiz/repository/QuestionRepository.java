@@ -1,6 +1,7 @@
 package com.quiz.quiz.repository;
 
 import com.quiz.quiz.dto.question.AllQuestionByThemeResponse;
+import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,9 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
     @Query("SELECT q.theme FROM Question q GROUP BY q.theme ORDER BY q.theme")
     List<String> findAllTheme();
+
+    @Query("SELECT q.answers FROM Question q WHERE q.id = ?1 ORDER BY q.theme")
+    List<Answer> findAllQuestionAnswersById(UUID questionId);
 
     @Query("SELECT new com.quiz.quiz.dto.question.AllQuestionByThemeResponse(q.id, aq.chosenAnswerId, q.text, q.image) " +
             "FROM com.quiz.quiz.entity.Question q LEFT JOIN AnsweredQuestion aq " +

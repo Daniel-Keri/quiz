@@ -65,10 +65,8 @@ public class QuestionService {
 
     public Page<QuestionAnswerResponse> findAllQuestionAnswers(UUID id, Pageable pageable) throws QuestionNotFoundException {
 
-        List<Answer> answers = questionRepository
-                .findById(id)
-                .orElseThrow(QuestionNotFoundException::new)
-                .getAnswers();
+        List<Answer> answers = questionRepository.findAllQuestionAnswersById(id);
+        if (answers.isEmpty() || answers.size() == 0) { throw new QuestionNotFoundException();}
 
         List<QuestionAnswerResponse> questionAnswerResponses = answers.stream()
                 .map(answerConverter::toQuestionAnswerResponse)

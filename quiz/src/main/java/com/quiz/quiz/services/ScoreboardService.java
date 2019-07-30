@@ -27,7 +27,15 @@ public class ScoreboardService {
 
     public List<ScoreboardResponse> getScoreBoard() {
 
-        return scoreboardRepository.findAll().stream()
+        return scoreboardRepository.findAllOrderedByThemeThenScore().stream()
+                .map(scoreboardConverter::toScoreboardResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<ScoreboardResponse> getScoreBoard2() {
+
+        return scoreboardRepository.findAllOrderedByThemeThenScore()
+                .stream()
                 .map(scoreboardConverter::toScoreboardResponse)
                 .collect(Collectors.toList());
     }

@@ -19,9 +19,9 @@ public class ScoreboardController {
     private final ScoreboardService scoreboardService;
 
     // GET
-    @GetMapping("/findByTheme")
+    @GetMapping("/byTheme/{theme}")
     @ResponseBody
-    public List<ScoreboardResponse> getScoreboardByTheme(@RequestParam(name = "theme") String theme) throws ScoreboardNotFoundException {
+    public List<ScoreboardResponse> getScoreboardByTheme(@PathVariable("theme") String theme) throws ScoreboardNotFoundException {
 
         return scoreboardService.getScoreboardByTheme(theme);
     }

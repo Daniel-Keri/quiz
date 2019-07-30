@@ -21,7 +21,7 @@ public class QuestionConverter {
                         .collect(Collectors.toList()))
                 .setId(question.getId())
                 .setTheme(question.getTheme())
-                .setScore(question.getPoints())
+                .setPoints(question.getPoints())
                 .setImage(question.getImage())
                 .setText(question.getText());
     }
@@ -32,7 +32,7 @@ public class QuestionConverter {
                         .map(answerConverter::toAnswer)
                         .collect(Collectors.toList()))
                 .setTheme(createQuestionRequest.getTheme())
-                .setPoints(createQuestionRequest.getScore())
+                .setPoints(createQuestionRequest.getPoints())
                 .setImage(createQuestionRequest.getImage())
                 .setText(createQuestionRequest.getText());
     }

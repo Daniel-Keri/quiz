@@ -8,6 +8,7 @@ import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Answer;
+import com.quiz.quiz.entity.Question;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
 import com.quiz.quiz.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +52,7 @@ public class QuestionService {
 
         List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme);
 
-        return (new PageImpl<>(questionList, pageable, questionList.size()));
+        return new PageImpl<>(questionList, pageable, questionList.size());
     }
 
     public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(String theme, Pageable pageable) {

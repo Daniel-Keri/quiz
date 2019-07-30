@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.quiz.quiz.config.constants.URIConstants.SCOREBOARD;
 
 
@@ -21,8 +23,7 @@ public class ScoreboardController {
     // GET
     @GetMapping("/byTheme/{theme}")
     @ResponseBody
-    public List<ScoreboardResponse> getScoreboardByTheme(@PathVariable("theme") String theme) throws ScoreboardNotFoundException {
-
+    public Page<ScoreboardResponse> getScoreboardByTheme(@PathVariable("theme") String theme, Pageable pageable) throws ScoreboardNotFoundException {
 
         return scoreboardService.getScoreboardByTheme(theme, pageable);
     }

@@ -24,5 +24,5 @@ public class CreateQuestionResponse {
 
     private String image;
 
-    private double score;
+    private Double points;
 }

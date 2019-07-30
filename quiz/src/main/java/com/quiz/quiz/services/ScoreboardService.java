@@ -37,12 +37,4 @@ public class ScoreboardService {
 
         return new PageImpl<>(scoreboardResponses, pageable, scoreboardResponses.size());
     }
-
-    public List<ScoreboardResponse> getScoreBoard2() {
-
-        return scoreboardRepository.findAllOrderedByThemeThenScore()
-                .stream()
-                .map(scoreboardConverter::toScoreboardResponse)
-                .collect(Collectors.toList());
-    }
 }

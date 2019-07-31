@@ -2,10 +2,8 @@ package com.quiz.quiz.services.accounts;
 
 import com.quiz.quiz.converter.AccountConverter;
 import com.quiz.quiz.dto.account.*;
-import com.quiz.quiz.entity.Account;
 import com.quiz.quiz.entity.AdminAccount;
-import com.quiz.quiz.exceptions.AccountNotFoundException;
-import com.quiz.quiz.repository.accounts.AccountRepository;
+import com.quiz.quiz.errorHandling.exceptions.AccountNotFoundException;
 import com.quiz.quiz.repository.accounts.AdminAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

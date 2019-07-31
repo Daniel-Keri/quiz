@@ -6,7 +6,7 @@ import com.quiz.quiz.dto.question.AllQuestionByThemeResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.ThemeResponse;
-import com.quiz.quiz.exceptions.QuestionNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.QuestionNotFoundException;
 import com.quiz.quiz.services.QuestionService;
 import com.quiz.quiz.validation.requestValidators.CreateQuestionRequestValidator;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +79,12 @@ public class QuestionController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteQuestions(@RequestParam(name = "id") List<UUID> ids) throws QuestionNotFoundException {
         questionService.deleteQuestions(ids);
+    }
+
+    @DeleteMapping("/deleteQuestionsByThemes")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteQuestionsByThemes(@RequestParam(name = "themes") List<String> themes) throws QuestionNotFoundException {
+        questionService.deleteQuestionsByThemes(themes);
     }
 }
 

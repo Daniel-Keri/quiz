@@ -1,8 +1,10 @@
-package com.quiz.quiz.exceptions;
+package com.quiz.quiz.errorHandling.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ScoreboardNotFoundException extends RuntimeException {
-
+//    ScoreboardNotFoundException(final String message) {
+//        super(message);
+//    }
 }

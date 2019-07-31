@@ -2,12 +2,10 @@ package com.quiz.quiz.repository;
 
 import com.quiz.quiz.dto.question.AllQuestionByThemeResponse;
 import com.quiz.quiz.entity.Question;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.persistence.OrderBy;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,8 +16,11 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
     Optional<Question> findByPoints(Double points);
 
-    @OrderBy("Question.id")
-    Page<Question> findAllByTheme(String theme, Pageable pageable);
+//    @OrderBy("Question.id")
+//    Page<Question> findAllByTheme(List<String> theme, Pageable pageable);
+
+    List<Question> findAllByThemeIn(List<String> theme);
+
 
     @Query("SELECT q.theme FROM Question q GROUP BY q.theme ORDER BY q.theme")
     List<String> findAllTheme();
@@ -32,4 +33,8 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
             "WHERE q.theme = ?1 " +
             "ORDER BY aq.chosenAnswerId DESC")
     List<AllQuestionByThemeResponse> getAllQuestionsByThemeResponses(String theme);
+
+    @Modifying
+    @Query("DELETE FROM Question q WHERE q.theme IN ?1")
+    void deleteQuestionsByThemes(List<String> themes);
 }

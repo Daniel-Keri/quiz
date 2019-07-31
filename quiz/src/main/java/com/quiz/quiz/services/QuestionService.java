@@ -9,7 +9,8 @@ import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.entity.Question;
-import com.quiz.quiz.exceptions.QuestionNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.QuestionNotFoundException;
+import com.quiz.quiz.repository.AnswerRepository;
 import com.quiz.quiz.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +33,7 @@ public class QuestionService {
     private final QuestionConverter questionConverter;
     private final AnswerConverter answerConverter;
     private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
 
     // POST
     public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest) {
@@ -41,11 +45,11 @@ public class QuestionService {
     // GET
     public Page<ThemeResponse> findAllTheme(Pageable pageable) {
 
-        List<ThemeResponse> themeResponses= questionRepository.findAllTheme().stream()
+        List<ThemeResponse> themeResponses = questionRepository.findAllTheme().stream()
                 .map(questionConverter::toThemeResponse)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(themeResponses,pageable,themeResponses.size()) ;
+        return new PageImpl<>(themeResponses, pageable, themeResponses.size());
     }
 
     public Page<AllQuestionByThemeResponse> findAllByTheme(String theme, Pageable pageable) {
@@ -79,7 +83,7 @@ public class QuestionService {
 
     // DELETE
     public void deleteQuestion(UUID id) throws QuestionNotFoundException {
-
+        questionRepository.findById(id).get();
         questionRepository.delete(questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new));
     }
 
@@ -92,5 +96,26 @@ public class QuestionService {
         } else {
             questions.forEach(questionRepository::delete);
         }
+    }
+
+    ////    @Transactional
+//    public void deleteQuestionsByThemes(List<String> themes) {
+//
+//       questionRepository.deleteQuestionsByThemes(themes);
+//    }
+    public void deleteQuestionsByThemes(List<String> themes) {
+        List<Question> questions = questionRepository.findAllByThemeIn(themes);
+        List<Answer> answers = questions.stream()
+                .flatMap(question -> question.getAnswers().stream())
+                .collect(Collectors.toList());
+
+        if (questions.isEmpty()) {
+            throw new QuestionNotFoundException();
+        } else {
+            answerRepository.deleteInBatch(answers);
+            questionRepository.deleteInBatch(questions);
+        }
+        // todo n+1
+        //todo global exception handler
     }
 }

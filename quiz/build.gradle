@@ -38,4 +38,10 @@ dependencies {
 	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.1.7.RELEASE'
 
 
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+	testCompile group: 'org.springframework.security', name: 'spring-security-test'
+	testCompile group: 'io.rest-assured', name: 'spring-mock-mvc', version: '3.0.0'
+	
+
+
 }

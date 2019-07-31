@@ -2,7 +2,7 @@ package com.quiz.quiz.services;
 
 import com.quiz.quiz.converter.ScoreboardConverter;
 import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
-import com.quiz.quiz.exceptions.ScoreboardNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.ScoreboardNotFoundException;
 import com.quiz.quiz.repository.ScoreboardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

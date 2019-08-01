@@ -3,7 +3,7 @@ package com.quiz.quiz.services.accounts;
 import com.quiz.quiz.converter.AccountConverter;
 import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.entity.UserAccount;
-import com.quiz.quiz.errorHandling.exceptions.AccountNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.accounts.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,16 +30,16 @@ public class UserAccountService {
     // GET
     public GetUserAccountDataResponse getUserAccountData() {
 
-        UserAccount userAccount=userAccountRepository.getUserAccountData().orElseThrow(AccountNotFoundException::new);
+        UserAccount userAccount=userAccountRepository.getUserAccountData().orElseThrow(EntityNotFoundException::new);
 
         return accountConverter.toGetUserAccountDataResponse(userAccount);
     }
 
     // UPDATE
     @Transactional
-    public UpdateUserAccountResponse updateUserAccount(UpdateUserAccountRequest updateUserAccountRequest) throws AccountNotFoundException
+    public UpdateUserAccountResponse updateUserAccount(UpdateUserAccountRequest updateUserAccountRequest) throws EntityNotFoundException
     {
-        UserAccount userAccount = userAccountRepository.getUserAccountData().orElseThrow(AccountNotFoundException::new);
+        UserAccount userAccount = userAccountRepository.getUserAccountData().orElseThrow(EntityNotFoundException::new);
 
         if (updateUserAccountRequest.getPassword()!=null){
             userAccount.setPassword(new BCryptPasswordEncoder().encode(updateUserAccountRequest.getPassword()));

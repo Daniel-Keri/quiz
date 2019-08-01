@@ -2,7 +2,7 @@ package com.quiz.quiz.services;
 
 import com.quiz.quiz.converter.ScoreboardConverter;
 import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
-import com.quiz.quiz.errorHandling.exceptions.ScoreboardNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.ScoreboardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ public class ScoreboardService {
     private final ScoreboardConverter scoreboardConverter;
 
     // GET
-    public Page<ScoreboardResponse> getScoreboardByTheme(String theme, Pageable pageable) throws ScoreboardNotFoundException {
+    public Page<ScoreboardResponse> getScoreboardByTheme(String theme, Pageable pageable) throws EntityNotFoundException {
 
         List<ScoreboardResponse> scoreboardResponses = scoreboardRepository.getScoreboardByTheme(theme).stream()
                 .map(scoreboardConverter::toScoreboardResponse)

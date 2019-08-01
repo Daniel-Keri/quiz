@@ -10,6 +10,7 @@ import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.entity.Question;
 import com.quiz.quiz.exceptions.QuestionNotFoundException;
+import com.quiz.quiz.repository.AnswerRepository;
 import com.quiz.quiz.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,12 +31,23 @@ public class QuestionService {
     private final QuestionConverter questionConverter;
     private final AnswerConverter answerConverter;
     private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
 
     // POST
     public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest) {
 
+        Question question = questionConverter.toCreateQuestion(createQuestionRequest);
+        Question savedQuestion = questionRepository.save(question);
+
+        List<Answer> savedAnswers = answerRepository.saveAll(createQuestionRequest.getAnswers().stream()
+                .map(createAnswerRequest -> answerConverter.toAnswer(createAnswerRequest, savedQuestion))
+                .collect(Collectors.toList()));
+
         return questionConverter.toCreateQuestionResponse(
-                questionRepository.save(questionConverter.toCreateQuestion(createQuestionRequest)));
+                savedQuestion,
+                savedAnswers.stream()
+                        .map(answerConverter::toCreateAnswerResponse)
+                        .collect(Collectors.toList()));
     }
 
     // GET
@@ -65,7 +77,7 @@ public class QuestionService {
 
     public Page<QuestionAnswerResponse> findAllQuestionAnswers(UUID id, Pageable pageable) throws QuestionNotFoundException {
 
-        List<Answer> answers = questionRepository.findAllQuestionAnswersById(id);
+        List<Answer> answers = answerRepository.findAllQuestionAnswersById(id);
         if (answers.isEmpty() || answers.size() == 0) { throw new QuestionNotFoundException();}
 
         List<QuestionAnswerResponse> questionAnswerResponses = answers.stream()

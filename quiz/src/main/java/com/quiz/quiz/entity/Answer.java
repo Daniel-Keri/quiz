@@ -6,7 +6,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Blob;
 import java.util.UUID;
 
 @Data
@@ -31,4 +30,8 @@ public class Answer {
     @NotNull
     @Column(name = "is_correct", nullable = false)
     private Boolean isCorrect;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question", referencedColumnName = "id")
+    private Question question;
 }

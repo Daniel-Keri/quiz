@@ -6,12 +6,13 @@ import com.quiz.quiz.entity.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface QuestionRepository extends JpaRepository<Question, UUID> {
+public interface  QuestionRepository extends JpaRepository<Question, UUID> {
 
     Optional<Question> findByTheme(String theme);
 
@@ -20,7 +21,9 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
 //    @OrderBy("Question.id")
 //    Page<Question> findAllByTheme(List<String> theme, Pageable pageable);
 
-    List<Question> findAllByThemeIn(List<String> theme);
+    @Query("SELECT q FROM Question q JOIN FETCH q.answers " +
+            "WHERE q.theme IN :theme")
+    List<Question> findAllByThemeIn(@Param(value = "theme") List<String> theme);
 
 
     @Query("SELECT q.theme FROM Question q GROUP BY q.theme ORDER BY q.theme")

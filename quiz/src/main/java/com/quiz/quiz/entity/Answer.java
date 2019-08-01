@@ -32,7 +32,7 @@ public class Answer {
     private Boolean isCorrect;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", nullable = false)//name = "question_id", referencedColumnName = "question_id")
-    private Question questionId;
+    @JoinColumn(name = "question", nullable = false)//name = "question", referencedColumnName = "question_id")
+    private Question question;
 
 }

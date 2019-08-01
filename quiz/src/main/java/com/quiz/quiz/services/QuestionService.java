@@ -54,9 +54,7 @@ public class QuestionService {
 
     public Page<AllQuestionByThemeResponse> findAllByTheme(String theme, Pageable pageable) {
 
-        List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme);
-
-        return new PageImpl<>(questionList, pageable, questionList.size());
+        return questionRepository.getAllQuestionsByThemeResponses(theme, pageable);
     }
 
     public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(String theme, Pageable pageable) {

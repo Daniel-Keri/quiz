@@ -3,6 +3,8 @@ package com.quiz.quiz.repository;
 import com.quiz.quiz.dto.question.AllQuestionByThemeResponse;
 import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.entity.Question;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -40,6 +42,14 @@ public interface  QuestionRepository extends JpaRepository<Question, UUID> {
             "WHERE q.theme = ?1 " +
             "ORDER BY aq.chosenAnswerId DESC")
     List<AllQuestionByThemeResponse> getAllQuestionsByThemeResponses(String theme);
+
+    @Query("SELECT new com.quiz.quiz.dto.question.AllQuestionByThemeResponse(q.id, aq.chosenAnswerId, q.text, q.image) " +
+            "FROM com.quiz.quiz.entity.Question q LEFT JOIN AnsweredQuestion aq " +
+            "ON q.id = aq.questionId AND (" +
+            "aq.userAccountId = ?#{principal.id})" +
+            "WHERE q.theme = ?1 " +
+            "ORDER BY aq.chosenAnswerId DESC")
+    Page<AllQuestionByThemeResponse> getAllQuestionsByThemeResponses(String theme, Pageable pageable);
 
     @Modifying
     @Query("DELETE FROM Question q WHERE q.theme IN ?1")

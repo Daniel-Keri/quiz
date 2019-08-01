@@ -25,16 +25,20 @@ public class QuestionConverter {
                 .setImage(question.getImage())
                 .setText(question.getText());
     }
+
     public Question toCreateQuestion(CreateQuestionRequest createQuestionRequest) {
 
-        return new Question()
-                .setAnswers(createQuestionRequest.getAnswers().stream()
-                        .map(answerConverter::toAnswer)
-                        .collect(Collectors.toList()))
+        Question question = new Question()
                 .setTheme(createQuestionRequest.getTheme())
                 .setPoints(createQuestionRequest.getPoints())
                 .setImage(createQuestionRequest.getImage())
                 .setText(createQuestionRequest.getText());
+
+        question.setAnswers(createQuestionRequest.getAnswers().stream()
+                .map((createAnswerRequest) -> answerConverter.toAnswer(createAnswerRequest, question))
+                .collect(Collectors.toList()));
+
+        return question;
     }
 
     public ThemeResponse toThemeResponse(String theme) {

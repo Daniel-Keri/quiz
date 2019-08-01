@@ -5,14 +5,12 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.REFRESH;
 
 @Data
 @Entity
@@ -35,8 +33,7 @@ public class Question {
     private String theme;
 
     @NotNull
-    @OneToMany(cascade = ALL)//, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "question_id", nullable = false)
+    @OneToMany(mappedBy = "questionId", cascade = {REFRESH, REFRESH}, fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();
 
     @Column(name = "image", columnDefinition = "text")

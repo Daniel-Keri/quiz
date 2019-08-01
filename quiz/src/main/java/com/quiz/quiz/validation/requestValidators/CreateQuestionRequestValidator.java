@@ -50,16 +50,6 @@ public class CreateQuestionRequestValidator implements Validator {
                 errors.rejectValue("answers", "INVALID", String.format(
                         "Incorrect number of correct answers. The minimum is: %s and the maximum is: %s", MIN_CORRECT_ANSWER, MAX_CORRECT_ANSWER));
             }
-
-            int correctAnswerCount = 0;
-            for (CreateAnswerRequest s : createAnswerRequests) {
-                if(s.getIsCorrect()) {
-                    correctAnswerCount++;
-                }
-            }
-            if (correctAnswerCount > 1 || correctAnswerCount == 0) {
-                errors.rejectValue("answers", "INCORRECT_NUMBER_OF_CORRECT_ANSWERS", "invalid answers");
-            }
         }
     }
 }

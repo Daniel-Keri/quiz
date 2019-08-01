@@ -1,5 +1,6 @@
 package com.quiz.quiz.controller;
 
+import com.quiz.quiz.dto.LoggedInResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,5 +13,9 @@ public class LoginController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public void login() {}
+    public LoggedInResponse login() {
+
+        return new LoggedInResponse().setMessage("Logged in");
+
+    }
 }

@@ -1,7 +1,7 @@
 package com.quiz.quiz.controller;
 
 import com.quiz.quiz.dto.scoreboard.ScoreboardResponse;
-import com.quiz.quiz.errorHandling.exceptions.ScoreboardNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.services.ScoreboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ public class ScoreboardController {
     // GET
     @GetMapping("/byTheme/{theme}")
     @ResponseBody
-    public Page<ScoreboardResponse> getScoreboardByTheme(@PathVariable("theme") String theme, Pageable pageable) throws ScoreboardNotFoundException {
+    public Page<ScoreboardResponse> getScoreboardByTheme(@PathVariable("theme") String theme, Pageable pageable) throws EntityNotFoundException {
 
         return scoreboardService.getScoreboardByTheme(theme, pageable);
     }

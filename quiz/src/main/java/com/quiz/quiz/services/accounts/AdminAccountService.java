@@ -3,7 +3,7 @@ package com.quiz.quiz.services.accounts;
 import com.quiz.quiz.converter.AccountConverter;
 import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.entity.AdminAccount;
-import com.quiz.quiz.errorHandling.exceptions.AccountNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.accounts.AdminAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,16 +28,16 @@ public class AdminAccountService {
 
     public GetAdminAccountDataResponse getAdminAccountData() {
 
-        AdminAccount adminAccount=adminAccountRepository.getAdminAccountData().orElseThrow(AccountNotFoundException::new);
+        AdminAccount adminAccount=adminAccountRepository.getAdminAccountData().orElseThrow(EntityNotFoundException::new);
 
         return accountConverter.toGetAdminAccountDataResponse(adminAccount);
     }
 
     // UPDATE
     @Transactional
-    public UpdateAdminAccountResponse updateAdminAccount(UpdateAdminAccountRequest updateAdminAccountRequest) throws AccountNotFoundException
+    public UpdateAdminAccountResponse updateAdminAccount(UpdateAdminAccountRequest updateAdminAccountRequest) throws EntityNotFoundException
     {
-        AdminAccount adminAccount = adminAccountRepository.getAdminAccountData().orElseThrow(AccountNotFoundException::new);
+        AdminAccount adminAccount = adminAccountRepository.getAdminAccountData().orElseThrow(EntityNotFoundException::new);
 
         if (updateAdminAccountRequest.getPassword()!=null){
             adminAccount.setPassword(new BCryptPasswordEncoder().encode(updateAdminAccountRequest.getPassword()));

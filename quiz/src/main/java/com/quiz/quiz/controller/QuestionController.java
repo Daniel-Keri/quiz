@@ -6,7 +6,7 @@ import com.quiz.quiz.dto.question.AllQuestionByThemeResponse;
 import com.quiz.quiz.dto.question.CreateQuestionRequest;
 import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.ThemeResponse;
-import com.quiz.quiz.errorHandling.exceptions.QuestionNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.services.QuestionService;
 import com.quiz.quiz.validation.requestValidators.CreateQuestionRequestValidator;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +63,7 @@ public class QuestionController {
     }
 
     @GetMapping("/answers")
-    Page<QuestionAnswerResponse> findAllQuestionAnswers(@RequestParam(name = "id") UUID id, Pageable pageable) throws QuestionNotFoundException {
+    Page<QuestionAnswerResponse> findAllQuestionAnswers(@RequestParam(name = "id") UUID id, Pageable pageable) throws EntityNotFoundException {
 
         return questionService.findAllQuestionAnswers(id,pageable);
     }
@@ -71,19 +71,19 @@ public class QuestionController {
     // DELETE
     @DeleteMapping("/deleteQuestion")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestion(@RequestParam(name = "id") UUID id) throws QuestionNotFoundException {
+    public void deleteQuestion(@RequestParam(name = "id") UUID id) throws EntityNotFoundException {
         questionService.deleteQuestion(id);
     }
 
     @DeleteMapping("/deleteQuestions")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestions(@RequestParam(name = "id") List<UUID> ids) throws QuestionNotFoundException {
+    public void deleteQuestions(@RequestParam(name = "id") List<UUID> ids) throws EntityNotFoundException {
         questionService.deleteQuestions(ids);
     }
 
     @DeleteMapping("/deleteQuestionsByThemes")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteQuestionsByThemes(@RequestParam(name = "themes") List<String> themes) throws QuestionNotFoundException {
+    public void deleteQuestionsByThemes(@RequestParam(name = "themes") List<String> themes) throws EntityNotFoundException {
         questionService.deleteQuestionsByThemes(themes);
     }
 }

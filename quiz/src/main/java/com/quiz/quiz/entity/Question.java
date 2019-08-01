@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REFRESH;
 
 @Data
@@ -33,7 +34,7 @@ public class Question {
     private String theme;
 
     @NotNull
-    @OneToMany(mappedBy = "questionId", cascade = {REFRESH, REFRESH}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "questionId", cascade = {PERSIST, REFRESH}, fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();
 
     @Column(name = "image", columnDefinition = "text")

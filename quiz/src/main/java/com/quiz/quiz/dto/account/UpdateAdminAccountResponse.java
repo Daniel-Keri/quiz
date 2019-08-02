@@ -6,7 +6,5 @@ import lombok.experimental.Accessors;
 @Accessors(chain=true)
 public class UpdateAdminAccountResponse {
 
-
-
     private String username;
 }

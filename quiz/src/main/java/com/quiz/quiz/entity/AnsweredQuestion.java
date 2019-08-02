@@ -31,4 +31,12 @@ public class AnsweredQuestion {
     @NotNull
     @Column(name = "chosen_answer_id", nullable = false)
     private UUID chosenAnswerId;
+
+    @NotNull
+    @Column(name = "is_correct", nullable = false)
+    private Boolean isCorrect;
+
+    @NotNull
+    @Column(name = "points", nullable = false)
+    private Double points;
 }

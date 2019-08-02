@@ -18,11 +18,14 @@ public class AllQuestionByThemeResponse {
 
     private String image;
 
-    public AllQuestionByThemeResponse(UUID questionId, UUID chosenAnswerId, String text, String image) {
+    private Double points;
+
+    public AllQuestionByThemeResponse(UUID questionId, UUID chosenAnswerId, String text, String image, Double points) {
 
         this.questionId = questionId;
         this.chosenAnswerId = chosenAnswerId;
         this.text = text;
         this.image = image;
+        this.points = points;
     }
 }

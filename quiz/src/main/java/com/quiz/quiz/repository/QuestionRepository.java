@@ -34,7 +34,7 @@ public interface  QuestionRepository extends JpaRepository<Question, UUID> {
     @Query("SELECT q.answers FROM Question q WHERE q.id = ?1 ORDER BY q.theme")
     List<Answer> findAllQuestionAnswersById(UUID questionId);
 
-    @Query("SELECT new com.quiz.quiz.dto.question.AllQuestionByThemeResponse(q.id, aq.chosenAnswerId, q.text, q.image) " +
+    @Query("SELECT new com.quiz.quiz.dto.question.AllQuestionByThemeResponse(q.id, aq.chosenAnswerId, q.text, q.image, q.points) " +
             "FROM com.quiz.quiz.entity.Question q LEFT JOIN AnsweredQuestion aq " +
             "ON q.id = aq.questionId AND (" +
             //"aq.userAccountId IS NULL OR " +
@@ -43,7 +43,7 @@ public interface  QuestionRepository extends JpaRepository<Question, UUID> {
             "ORDER BY aq.chosenAnswerId DESC")
     List<AllQuestionByThemeResponse> getAllQuestionsByThemeResponses(String theme);
 
-    @Query("SELECT new com.quiz.quiz.dto.question.AllQuestionByThemeResponse(q.id, aq.chosenAnswerId, q.text, q.image) " +
+    @Query("SELECT new com.quiz.quiz.dto.question.AllQuestionByThemeResponse(q.id, aq.chosenAnswerId, q.text, q.image, q.points) " +
             "FROM com.quiz.quiz.entity.Question q LEFT JOIN AnsweredQuestion aq " +
             "ON q.id = aq.questionId AND (" +
             "aq.userAccountId = ?#{principal.id})" +

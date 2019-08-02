@@ -9,6 +9,4 @@ import java.util.UUID;
 
 public interface AnsweredQuestionsRepository extends JpaRepository<AnsweredQuestion, UUID> {
 
-    @Query("SELECT aq FROM AnsweredQuestion aq WHERE aq.userAccountId = ?#{principal.id}")
-    List<AnsweredQuestion> findAllAnsweredQuestions();
 }

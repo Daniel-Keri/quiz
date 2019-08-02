@@ -16,4 +16,6 @@ public class AnsweredQuestionRequest {
     private Boolean isCorrect;
 
     private Double points;
+
+    private String theme;
 }

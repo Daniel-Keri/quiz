@@ -39,4 +39,8 @@ public class AnsweredQuestion {
     @NotNull
     @Column(name = "points", nullable = false)
     private Double points;
+
+    @NotNull
+    @Column(name = "theme",nullable = false)
+    private String theme;
 }

@@ -9,7 +9,7 @@ import com.quiz.quiz.dto.question.CreateQuestionResponse;
 import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.entity.Question;
-import com.quiz.quiz.errorHandling.exceptions.QuestionNotFoundException;
+import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.AnswerRepository;
 import com.quiz.quiz.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -54,9 +54,7 @@ public class QuestionService {
 
     public Page<AllQuestionByThemeResponse> findAllByTheme(String theme, Pageable pageable) {
 
-        List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme);
-
-        return new PageImpl<>(questionList, pageable, questionList.size());
+        return questionRepository.getAllQuestionsByThemeResponses(theme, pageable);
     }
 
     public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(String theme, Pageable pageable) {
@@ -67,10 +65,10 @@ public class QuestionService {
         return new PageImpl<>(questionList, pageable, questionList.size());
     }
 
-    public Page<QuestionAnswerResponse> findAllQuestionAnswers(UUID id, Pageable pageable) throws QuestionNotFoundException {
+    public Page<QuestionAnswerResponse> findAllQuestionAnswers(UUID id, Pageable pageable) throws EntityNotFoundException {
 
         List<Answer> answers = questionRepository.findAllQuestionAnswersById(id);
-        if (answers.isEmpty() || answers.size() == 0) { throw new QuestionNotFoundException();}
+        if (answers.isEmpty()) { throw new EntityNotFoundException();}
 
         List<QuestionAnswerResponse> questionAnswerResponses = answers.stream()
                 .map(answerConverter::toQuestionAnswerResponse)
@@ -80,17 +78,17 @@ public class QuestionService {
     }
 
     // DELETE
-    public void deleteQuestion(UUID id) throws QuestionNotFoundException {
-        questionRepository.findById(id).get();
-        questionRepository.delete(questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new));
+    public void deleteQuestion(UUID id) throws EntityNotFoundException {
+
+        questionRepository.delete(questionRepository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
-    public void deleteQuestions(List<UUID> ids) throws QuestionNotFoundException {
+    public void deleteQuestions(List<UUID> ids) throws EntityNotFoundException {
 
         List<Question> questions = questionRepository.findAllById(ids);
 
         if (questions.isEmpty()) {
-            throw new QuestionNotFoundException();
+            throw new EntityNotFoundException();
         } else {
             questions.forEach(questionRepository::delete);
         }
@@ -108,12 +106,10 @@ public class QuestionService {
                 .collect(Collectors.toList());
 
         if (questions.isEmpty()) {
-            throw new QuestionNotFoundException();
+            throw new EntityNotFoundException();
         } else {
             answerRepository.deleteInBatch(answers);
             questionRepository.deleteInBatch(questions);
         }
-        // todo n+1
-        //todo global exception handler
     }
 }

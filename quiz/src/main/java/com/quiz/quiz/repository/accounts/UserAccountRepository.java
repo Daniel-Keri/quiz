@@ -13,5 +13,4 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, UUID> 
 
     @Query("SELECT a FROM com.quiz.quiz.entity.UserAccount a WHERE a.id = ?#{principal.id}")
     Optional<UserAccount> getUserAccountData();
-
 }

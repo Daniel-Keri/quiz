@@ -16,5 +16,5 @@ public class UserAccount extends Account {
 //    @MapKeyColumn(name = "question_id")
 //    @Column(name = "score")
 //    @CollectionTable(name = "answered_questions")
-//    private Map<UUID, Dounble> answeredQuestions;
+//    private Map<UUID, Double> answeredQuestions;
 }

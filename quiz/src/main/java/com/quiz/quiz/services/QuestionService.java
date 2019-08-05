@@ -68,9 +68,7 @@ public class QuestionService {
     public Page<QuestionAnswerResponse> findAllQuestionAnswers(UUID id, Pageable pageable) throws EntityNotFoundException {
 
         List<Answer> answers = questionRepository.findAllQuestionAnswersById(id);
-        if (answers.isEmpty()) { throw new EntityNotFoundException();} else {
-            answers.size();
-        }
+        if (answers.isEmpty()) { throw new EntityNotFoundException();}
 
         List<QuestionAnswerResponse> questionAnswerResponses = answers.stream()
                 .map(answerConverter::toQuestionAnswerResponse)

@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.quiz.quiz.config.constants.URIConstants.ANSWERED_QUESTION;
 import static com.quiz.quiz.config.constants.URIConstants.QUESTION;
 
 @RestController

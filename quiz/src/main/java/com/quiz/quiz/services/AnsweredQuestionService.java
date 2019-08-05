@@ -1,10 +1,14 @@
 package com.quiz.quiz.services;
 
+import com.quiz.quiz.converter.AnsweredQuestionConverter;
+import com.quiz.quiz.dto.AnsweredQuestion.AnsweredQuestionRequest;
 import com.quiz.quiz.dto.AnsweredQuestion.MyScoreResponse;
 import com.quiz.quiz.dto.AnsweredQuestion.TopTenGlobalScoreResponse;
 import com.quiz.quiz.dto.AnsweredQuestion.TopTenScoreByThemeResponse;
+import com.quiz.quiz.entity.AnsweredQuestion;
 import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.AnsweredQuestionsRepository;
+import com.quiz.quiz.repository.accounts.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

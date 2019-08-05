@@ -13,6 +13,4 @@ public class URIConstants {
     public static final String ADMIN_ACCOUNT = "/adminAccounts";
 
     public static final String USER_ACCOUNT = "/userAccounts";
-
-    public static final String ANSWERED_QUESTION="/answeredQuestion";
 }

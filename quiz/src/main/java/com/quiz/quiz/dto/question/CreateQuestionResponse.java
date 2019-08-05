@@ -23,6 +23,6 @@ public class CreateQuestionResponse {
     private List<CreateAnswerResponse> answers = new ArrayList<>();
 
     private String image;
-
+        
     private Double points;
 }

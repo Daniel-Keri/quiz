@@ -23,7 +23,18 @@ public class AnsweredQuestionService {
     private final EntityManagerFactory entityManagerFactory;
 
     private final AnsweredQuestionsRepository answeredQuestionsRepository;
+    private final AnsweredQuestionConverter answeredQuestionConverter;
+    private final AccountRepository accountRepository;
 
+    //POST
+    public AnsweredQuestion createAnsweredQuestion(AnsweredQuestionRequest answeredQuestionRequest) {
+
+        return answeredQuestionsRepository.save(
+                answeredQuestionConverter.toAnsweredQuestion(
+                        accountRepository.getCurrentAccountId().orElseThrow(EntityNotFoundException::new),
+                        answeredQuestionRequest));
+    }
+    
     // GET
     public Page<TopTenGlobalScoreResponse> getTopTenGlobalScore(Pageable pageable) {
 

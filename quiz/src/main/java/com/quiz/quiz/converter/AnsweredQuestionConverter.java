@@ -11,7 +11,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AnsweredQuestionConverter {
 
-    AnsweredQuestion toAnsweredQuestion(UUID userAccountId, AnsweredQuestionRequest answeredQuestionRequest){
+   public AnsweredQuestion toAnsweredQuestion(UUID userAccountId, AnsweredQuestionRequest answeredQuestionRequest){
 
         return new AnsweredQuestion()
                 .setQuestionId(answeredQuestionRequest.getQuestionId())

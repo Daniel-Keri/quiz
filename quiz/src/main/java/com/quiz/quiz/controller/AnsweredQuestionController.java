@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.quiz.quiz.config.constants.URIConstants.ANSWERED_QUESTION;
 
-
 @RestController
 @RequestMapping(ANSWERED_QUESTION)
 @RequiredArgsConstructor
@@ -20,6 +19,13 @@ public class AnsweredQuestionController {
 
     private final AnsweredQuestionService answeredQuestionService;
 
+    //POST
+    @PostMapping
+    public AnsweredQuestion createAnsweredQuestion(@Validated @RequestBody AnsweredQuestionRequest answeredQuestionRequest){
+
+        return answeredQuestionService.createAnsweredQuestion(answeredQuestionRequest);
+    }
+  
     // GET
     @GetMapping("/topTen")
     @ResponseBody
@@ -41,4 +47,5 @@ public class AnsweredQuestionController {
 
         return answeredQuestionService.getMyScores(pageable);
     }
+    private final AnsweredQuestionService answeredQuestionService;
 }

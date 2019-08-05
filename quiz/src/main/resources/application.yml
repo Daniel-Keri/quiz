@@ -1,6 +1,10 @@
 spring:
   session:
     store-type: jdbc
+    jdbc:
+      initialize-schema: always
+      schema: classpath:org/springframework/session/jdbc/schema-@@platform@@.sql
+      table-name: SPRING_SESSION
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/quiz
@@ -19,3 +23,7 @@ spring:
 
 swagger:
   host: localhost:8080
+
+logging:
+  level:
+    org.springframework: INFO

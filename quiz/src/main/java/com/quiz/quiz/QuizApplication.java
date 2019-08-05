@@ -7,7 +7,6 @@ import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHtt
 
 import java.util.Arrays;
 
-//@EnableJdbcHttpSession
 @SpringBootApplication
 public class QuizApplication {
 

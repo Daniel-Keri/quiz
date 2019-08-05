@@ -41,6 +41,6 @@ public class AnsweredQuestion {
     private Double points;
 
     @NotNull
-    @Column(name = "theme",nullable = false)
+    @Column(name = "theme", nullable = false)
     private String theme;
 }

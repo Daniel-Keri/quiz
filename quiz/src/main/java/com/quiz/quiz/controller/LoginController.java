@@ -42,11 +42,4 @@ public class LoginController {
                     .setMessage("Not logged in");
         }
     }
-
-//    @GetMapping("loginFailed")
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    public LoginFailedResponse loginFailed() {
-//
-//        return new LoginFailedResponse();
-//    }
 }

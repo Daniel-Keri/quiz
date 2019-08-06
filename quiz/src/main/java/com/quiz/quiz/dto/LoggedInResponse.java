@@ -11,8 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class LoggedInResponse {
 
-    private String sessionId;
-
     private Boolean success;
 
     private String message;

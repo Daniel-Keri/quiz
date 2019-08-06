@@ -51,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .sessionManagement()
-                .maximumSessions(3)
+                .maximumSessions(4)
+                .maxSessionsPreventsLogin(true)
                 .and()
                 .invalidSessionUrl("/invalidSession.html")
                 .and()
@@ -64,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(QUESTION + EVERY_SUBPATH).authenticated()
                 .antMatchers(SCOREBOARD + EVERY_SUBPATH).authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/")

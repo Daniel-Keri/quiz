@@ -64,6 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(QUESTION + EVERY_SUBPATH).authenticated()
                 .antMatchers(SCOREBOARD + EVERY_SUBPATH).authenticated()
                 .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .and()
                 .formLogin()
                 .defaultSuccessUrl("/")
                 .and()

@@ -1,20 +1,11 @@
 package com.quiz.quiz.controller;
 
 import com.quiz.quiz.dto.LoggedInResponse;
-import com.quiz.quiz.dto.LoginFailedResponse;
-import com.quiz.quiz.services.LoginService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
 
 @RestController
-@RequestMapping("/")
 @AllArgsConstructor
 public class LoginController {
 

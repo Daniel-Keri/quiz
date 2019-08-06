@@ -10,6 +10,7 @@ import com.quiz.quiz.services.AnsweredQuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +24,15 @@ public class AnsweredQuestionController {
     private final AnsweredQuestionService answeredQuestionService;
 
     //POST
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/chooseAnswer")
     public AnsweredQuestion createAnsweredQuestion(@Validated @RequestBody AnsweredQuestionRequest answeredQuestionRequest){
 
         return answeredQuestionService.createAnsweredQuestion(answeredQuestionRequest);
     }
-  
+
     // GET
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping("/scores/topTen")
     @ResponseBody
     public Page<TopTenGlobalScoreResponse> getTopTenGlobalScore(Pageable pageable) {
@@ -37,6 +40,7 @@ public class AnsweredQuestionController {
         return answeredQuestionService.getTopTenGlobalScore(pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping("/scores/topTen/byTheme/{theme}")
     @ResponseBody
     public Page<TopTenScoreByThemeResponse> getTopTenScoreByTheme(@PathVariable("theme") String theme, Pageable pageable) throws EntityNotFoundException {
@@ -44,6 +48,7 @@ public class AnsweredQuestionController {
         return answeredQuestionService.getTopTenScoreByTheme(theme, pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/scores/myScores")
     @ResponseBody
     public Page<MyScoreResponse> getMyScores(Pageable pageable) {

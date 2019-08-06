@@ -34,7 +34,7 @@ public class AdminAccountController {
 
     // POST
     @PostMapping
-    //@PreAuthorize("hasRole('ROLE_ADMIN')") // MIGHT BE REDUNDANT DEPENDING ON SECURITY_CONFIG
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public CreateAdminAccountResponse createAdminAccount(@Validated @RequestBody CreateAdminAccountRequest createAdminAccountRequest){
 
         return adminAccountService.createAdminAccount(createAdminAccountRequest);
@@ -42,12 +42,14 @@ public class AdminAccountController {
 
     // GET
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public GetAdminAccountDataResponse getAdminAccountData() {
 
         return adminAccountService.getAdminAccountData();
     }
 
     // PATCH
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/update")
     public UpdateAdminAccountResponse updateAdmin(@Validated @RequestBody UpdateAdminAccountRequest updateAccountRequest){
 

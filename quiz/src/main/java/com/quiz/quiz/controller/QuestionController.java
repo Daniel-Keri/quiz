@@ -44,24 +44,28 @@ public class QuestionController {
     }
 
     // GET
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping("/themes")
     public Page<ThemeResponse> findAllTheme(Pageable pageable) {
 
         return questionService.findAllTheme(pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping("/byTheme/{theme}")
     public Page<AllQuestionByThemeResponse> findAllByTheme(@PathVariable("theme") String theme, Pageable pageable) {
 
         return questionService.findAllByTheme(theme, pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping("/byThemeRandomized/{theme}")
     public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(@PathVariable("theme") String theme, Pageable pageable) {
 
         return questionService.findAllByThemeRandomized(theme, pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping("/answers")
     Page<QuestionAnswerResponse> findAllQuestionAnswers(@RequestParam(name = "id") UUID id, Pageable pageable) throws EntityNotFoundException {
 
@@ -69,20 +73,20 @@ public class QuestionController {
     }
 
     // DELETE
-    @DeleteMapping("/deleteQuestion")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/deleteQuestion")
     public void deleteQuestion(@RequestParam(name = "id") UUID id) throws EntityNotFoundException {
         questionService.deleteQuestion(id);
     }
 
-    @DeleteMapping("/deleteQuestions")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/deleteQuestions")
     public void deleteQuestions(@RequestParam(name = "id") List<UUID> ids) throws EntityNotFoundException {
         questionService.deleteQuestions(ids);
     }
 
-    @DeleteMapping("/deleteQuestionsByThemes")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/deleteQuestionsByThemes")
     public void deleteQuestionsByThemes(@RequestParam(name = "themes") List<String> themes) throws EntityNotFoundException {
         questionService.deleteQuestionsByThemes(themes);
     }

@@ -3,6 +3,7 @@ package com.quiz.quiz.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -12,9 +13,9 @@ import java.util.UUID;
 //@DiscriminatorValue(value = "user_account")
 public class UserAccount extends Account {
 
-//    @ElementCollection
-//    @MapKeyColumn(name = "question_id")
-//    @Column(name = "score")
-//    @CollectionTable(name = "answered_questions")
-//    private Map<UUID, Double> answeredQuestions;
+    @ElementCollection
+    @MapKeyColumn(name = "question_id")
+    @Column(name = "score")
+    @CollectionTable(name = "answered_questions")
+    private List<AnsweredQuestion> answeredQuestions;
 }

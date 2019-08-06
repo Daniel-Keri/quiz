@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
 import static com.quiz.quiz.config.constants.URIConstants.*;
 import static org.springframework.http.HttpMethod.*;
@@ -35,44 +37,47 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
-        return new SecurityEvaluationContextExtension();
-    }
-
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                 .userDetailsService(customUserDetailsService)
-                .passwordEncoder(new BCryptPasswordEncoder());
+                .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .sessionManagement()
-                .maximumSessions(4)
-                .maxSessionsPreventsLogin(true)
-                .and()
-                .invalidSessionUrl("/invalidSession.html")
+//                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//                    .maximumSessions(1)
+//                    .maxSessionsPreventsLogin(true)
+//                    .expiredUrl("/login")
+//                .and()
+                    .invalidSessionUrl("/invalidSession.html")
                 .and()
                 .csrf().disable()
                 .cors().disable()
-                .authorizeRequests()
+                    .authorizeRequests()
                 //.antMatchers(ADMIN_ACCOUNT + EVERY_SUBPATH).authenticated()
-                .antMatchers(GET, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
-                .antMatchers(PATCH, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
-                .antMatchers(QUESTION + EVERY_SUBPATH).authenticated()
-                .antMatchers(SCOREBOARD + EVERY_SUBPATH).authenticated()
+                        .antMatchers(GET, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
+                        .antMatchers(PATCH, USER_ACCOUNT + EVERY_SUBPATH).authenticated()
+                        .antMatchers(QUESTION + EVERY_SUBPATH).authenticated()
+                        .antMatchers(SCOREBOARD + EVERY_SUBPATH).authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                    .formLogin()
+                    .defaultSuccessUrl("/")
                 .and()
-                .formLogin()
-                .defaultSuccessUrl("/")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login");
+                    .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("SESSION")
+        ;
 //                    .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.NO_CONTENT));
 
     }

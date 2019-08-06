@@ -10,6 +10,8 @@ import com.quiz.quiz.services.AnsweredQuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,7 @@ public class AnsweredQuestionController {
     private final AnsweredQuestionService answeredQuestionService;
 
     //POST
+    @Secured(value = {"USER"})
     @PostMapping("/chooseAnswer")
     public AnsweredQuestion createAnsweredQuestion(@Validated @RequestBody AnsweredQuestionRequest answeredQuestionRequest){
 

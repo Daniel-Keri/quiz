@@ -51,9 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .sessionManagement()
-                .maximumSessions(4)
-                .maxSessionsPreventsLogin(true)
-                .and()
+//                .maximumSessions(4)
+//                .maxSessionsPreventsLogin(true)
+//                .and()
                 .invalidSessionUrl("/invalidSession.html")
                 .and()
                 .csrf().disable()

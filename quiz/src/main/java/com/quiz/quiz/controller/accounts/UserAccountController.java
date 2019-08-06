@@ -6,6 +6,7 @@ import com.quiz.quiz.services.accounts.UserAccountService;
 import com.quiz.quiz.validation.requestValidators.account.AccountRequestValidator;
 import com.quiz.quiz.validation.requestValidators.account.UpdateUserAccountRequestValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ public class UserAccountController {
 
 
     // POST
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @PostMapping
     public CreateUserAccountResponse createUserAccount(@Validated @RequestBody CreateUserAccountRequest createUserAccountRequest){
 
@@ -40,6 +42,7 @@ public class UserAccountController {
     }
 
     // GET
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping
     public GetUserAccountDataResponse getUserAccountData() {
 
@@ -47,6 +50,7 @@ public class UserAccountController {
     }
 
     // PATCH
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @PatchMapping("/update")
     public UpdateUserAccountResponse updateUserAccount(@Validated @RequestBody UpdateUserAccountRequest updateUserAccountRequest){
 

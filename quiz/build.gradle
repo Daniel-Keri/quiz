@@ -23,20 +23,22 @@ repositories {
 
 dependencies {
 	compileOnly group: 'org.projectlombok', name: 'lombok'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compile group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.2.3'
-	runtime group: 'org.postgresql', name: 'postgresql'
-	compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.1.5.RELEASE'
-	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.1.5.RELEASE'
-	compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.1.5.RELEASE'
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.6.RELEASE'
-	compile group: 'org.springframework.security', name: 'spring-security-data', version: '5.1.5.RELEASE'
+	
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+	compile group: 'org.springframework.security', name: 'spring-security-core'
+	compile group: 'org.springframework.security', name: 'spring-security-web'
+	compile group: 'org.springframework.security', name: 'spring-security-config'
+	compile group: 'org.springframework.security', name: 'spring-security-data'
+	compile group: 'org.springframework.session', name: 'spring-session-jdbc'
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.1.7.RELEASE'
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.2.3'
 
+	runtime group: 'org.postgresql', name: 'postgresql'
+
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	testCompile group: 'org.mockito', name: 'mockito-core', version: '3.0.0'
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 	testCompile group: 'org.springframework.security', name: 'spring-security-test'

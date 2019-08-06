@@ -70,6 +70,8 @@ public class AnsweredQuestionService {
                 .setMaxResults(10)
                 .getResultList();
 
+        if (result.isEmpty()) {throw new EntityNotFoundException();}
+
         return new PageImpl<>(result, pageable, result.size());
     }
 

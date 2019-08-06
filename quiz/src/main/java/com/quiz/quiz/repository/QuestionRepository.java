@@ -24,9 +24,16 @@ public interface  QuestionRepository extends JpaRepository<Question, UUID> {
 //    Page<Question> findAllByTheme(List<String> theme, Pageable pageable);
 
     @Query("SELECT q FROM Question q JOIN FETCH q.answers " +
-            "WHERE q.theme IN :theme")
-    List<Question> findAllByThemeIn(@Param(value = "theme") List<String> theme);
+            "WHERE q.id = :id")
+    Optional<Question> findByIdEager(@Param(value = "id") UUID id);
 
+    @Query("SELECT q FROM Question q JOIN FETCH q.answers " +
+            "WHERE q.id IN :ids")
+    List<Question> findAllByIdIn(@Param(value = "ids") List<UUID> ids);
+
+    @Query("SELECT q FROM Question q JOIN FETCH q.answers " +
+            "WHERE q.theme IN :themes")
+    List<Question> findAllByThemeIn(@Param(value = "themes") List<String> themes);
 
     @Query("SELECT q.theme FROM Question q GROUP BY q.theme ORDER BY q.theme")
     List<String> findAllTheme();
@@ -50,8 +57,4 @@ public interface  QuestionRepository extends JpaRepository<Question, UUID> {
             "WHERE q.theme = ?1 " +
             "ORDER BY aq.chosenAnswerId DESC")
     Page<AllQuestionByThemeResponse> getAllQuestionsByThemeResponses(String theme, Pageable pageable);
-
-    @Modifying
-    @Query("DELETE FROM Question q WHERE q.theme IN ?1")
-    void deleteQuestionsByThemes(List<String> themes);
 }

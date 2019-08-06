@@ -38,8 +38,12 @@ public class QuestionService {
     // POST
     public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest) {
 
-        return questionConverter.toCreateQuestionResponse(
-                questionRepository.save(questionConverter.toCreateQuestion(createQuestionRequest)));
+        Question question = questionConverter.toCreateQuestion(createQuestionRequest);
+        List<Answer> answers = question.getAnswers();
+
+        question = questionRepository.save(question);
+        //answerRepository.saveAll(answers);
+        return questionConverter.toCreateQuestionResponse(question);
     }
 
     // GET
@@ -80,25 +84,28 @@ public class QuestionService {
     // DELETE
     public void deleteQuestion(UUID id) throws EntityNotFoundException {
 
-        questionRepository.delete(questionRepository.findById(id).orElseThrow(EntityNotFoundException::new));
+        Question question = questionRepository.findByIdEager(id).orElseThrow(EntityNotFoundException::new);
+        List<Answer> answers = question.getAnswers();
+
+        answerRepository.deleteInBatch(answers);
+        questionRepository.delete(question);
     }
 
     public void deleteQuestions(List<UUID> ids) throws EntityNotFoundException {
 
-        List<Question> questions = questionRepository.findAllById(ids);
+        List<Question> questions = questionRepository.findAllByIdIn(ids);
+        List<Answer> answers = questions.stream()
+                .flatMap(question -> question.getAnswers().stream())
+                .collect(Collectors.toList());
 
         if (questions.isEmpty()) {
             throw new EntityNotFoundException();
         } else {
-            questions.forEach(questionRepository::delete);
+            answerRepository.deleteInBatch(answers);
+            questionRepository.deleteInBatch(questions);
         }
     }
 
-    ////    @Transactional
-//    public void deleteQuestionsByThemes(List<String> themes) {
-//
-//       questionRepository.deleteQuestionsByThemes(themes);
-//    }
     public void deleteQuestionsByThemes(List<String> themes) {
         List<Question> questions = questionRepository.findAllByThemeIn(themes);
         List<Answer> answers = questions.stream()

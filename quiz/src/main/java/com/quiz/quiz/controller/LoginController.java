@@ -30,7 +30,7 @@ public class LoginController {
         String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
         String username = loginService.getLoggedIn(sessionId);
 
-        if (username != null && (username != "anonymousUser" && username != "") ) {
+        if (username != null && (!username.equals("anonymousUser") && !username.equals("")) ) {
             return new LoggedInResponse()
                     .setSuccess(true)
                     .setSessionId(sessionId)

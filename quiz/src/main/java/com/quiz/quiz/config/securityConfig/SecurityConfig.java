@@ -51,10 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .maximumSessions(3)
                 .and()
-                .cors().disable()
+                .invalidSessionUrl("/invalidSession.html")
+                .and()
                 .csrf().disable()
+                .cors().disable()
                 .authorizeRequests()
                 //.antMatchers(ADMIN_ACCOUNT + EVERY_SUBPATH).authenticated()
                 .antMatchers(GET, USER_ACCOUNT + EVERY_SUBPATH).authenticated()

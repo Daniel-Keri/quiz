@@ -7,6 +7,7 @@ import com.quiz.quiz.dto.AnsweredQuestion.TopTenGlobalScoreResponse;
 import com.quiz.quiz.dto.AnsweredQuestion.TopTenScoreByThemeResponse;
 import com.quiz.quiz.entity.AnsweredQuestion;
 import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
+import com.quiz.quiz.principal.CustomPrincipal;
 import com.quiz.quiz.repository.AnsweredQuestionsRepository;
 import com.quiz.quiz.security.CustomUserImpl;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +31,13 @@ public class AnsweredQuestionService {
 
     private final AnsweredQuestionsRepository answeredQuestionsRepository;
     private final AnsweredQuestionConverter answeredQuestionConverter;
+    private final CustomPrincipal customPrincipal;
 
     //POST
     public AnsweredQuestion createAnsweredQuestion(AnsweredQuestionRequest answeredQuestionRequest) {
 
         return answeredQuestionsRepository
-                .save(answeredQuestionConverter.toAnsweredQuestion(getLoggedInAccountId(), answeredQuestionRequest));
+                .save(answeredQuestionConverter.toAnsweredQuestion(customPrincipal.getLoggedInAccountId(), answeredQuestionRequest));
     }
     
     // GET
@@ -76,15 +78,6 @@ public class AnsweredQuestionService {
 
     public Page<MyScoreResponse> getMyScores(Pageable pageable) {
 
-        return answeredQuestionsRepository.getMyScores(getLoggedInAccountId(), pageable);
-    }
-
-    private UUID getLoggedInAccountId() {
-
-        return ((CustomUserImpl) SecurityContextHolder
-                    .getContext()
-                    .getAuthentication()
-                    .getPrincipal())
-                .getId();
+        return answeredQuestionsRepository.getMyScores(customPrincipal.getLoggedInAccountId(), pageable);
     }
 }

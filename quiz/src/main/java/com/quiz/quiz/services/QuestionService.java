@@ -10,6 +10,7 @@ import com.quiz.quiz.dto.question.ThemeResponse;
 import com.quiz.quiz.entity.Answer;
 import com.quiz.quiz.entity.Question;
 import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
+import com.quiz.quiz.principal.CustomPrincipal;
 import com.quiz.quiz.repository.AnswerRepository;
 import com.quiz.quiz.repository.QuestionRepository;
 import com.quiz.quiz.security.CustomUserImpl;
@@ -34,6 +35,7 @@ public class QuestionService {
     private final AnswerConverter answerConverter;
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private final CustomPrincipal customPrincipal;
 
     // POST
     public CreateQuestionResponse createQuestion(CreateQuestionRequest createQuestionRequest) {
@@ -58,12 +60,12 @@ public class QuestionService {
 
     public Page<AllQuestionByThemeResponse> findAllByTheme(String theme, Pageable pageable) {
 
-        return questionRepository.getAllQuestionsByThemeResponses(theme, getLoggedInAccountId(), pageable);
+        return questionRepository.getAllQuestionsByThemeResponses(theme, customPrincipal.getLoggedInAccountId(), pageable);
     }
 
     public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(String theme, Pageable pageable) {
 
-        List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme, getLoggedInAccountId());
+        List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme, customPrincipal.getLoggedInAccountId());
         Collections.shuffle(questionList);
 
         return new PageImpl<>(questionList, pageable, questionList.size());
@@ -119,14 +121,5 @@ public class QuestionService {
             answerRepository.deleteInBatch(answers);
             questionRepository.deleteInBatch(questions);
         }
-    }
-
-    private UUID getLoggedInAccountId() {
-
-        return ((CustomUserImpl) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal())
-                .getId();
     }
 }

@@ -4,6 +4,7 @@ import com.quiz.quiz.converter.AccountConverter;
 import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.entity.UserAccount;
 import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
+import com.quiz.quiz.principal.CustomPrincipal;
 import com.quiz.quiz.repository.accounts.UserAccountRepository;
 import com.quiz.quiz.security.CustomUserImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
     private final AccountConverter accountConverter;
+    private final CustomPrincipal customPrincipal;
 
     // POST
     public CreateUserAccountResponse createUserAccount(CreateUserAccountRequest createUserAccountRequest) {
@@ -34,7 +36,7 @@ public class UserAccountService {
     public GetUserAccountDataResponse getUserAccountData() {
 
         UserAccount userAccount = userAccountRepository
-                .getUserAccountData(getLoggedInAccountId())
+                .getUserAccountData(customPrincipal.getLoggedInAccountId())
                 .orElseThrow(EntityNotFoundException::new);
 
         return accountConverter.toGetUserAccountDataResponse(userAccount);
@@ -43,7 +45,7 @@ public class UserAccountService {
     // UPDATE
     @Transactional
     public UpdateUserAccountResponse updateUserAccount(UpdateUserAccountRequest updateUserAccountRequest) throws EntityNotFoundException {
-        UserAccount userAccount = userAccountRepository.getUserAccountData(getLoggedInAccountId()).orElseThrow(EntityNotFoundException::new);
+        UserAccount userAccount = userAccountRepository.getUserAccountData(customPrincipal.getLoggedInAccountId()).orElseThrow(EntityNotFoundException::new);
 
         if (updateUserAccountRequest.getPassword() != null) {
             userAccount.setPassword(new BCryptPasswordEncoder().encode(updateUserAccountRequest.getPassword()));
@@ -53,14 +55,5 @@ public class UserAccountService {
         }
         userAccountRepository.save(userAccount);
         return accountConverter.toUpdateUserAccountResponse(userAccount);
-    }
-
-    private UUID getLoggedInAccountId() {
-
-        return ((CustomUserImpl) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal())
-                .getId();
     }
 }

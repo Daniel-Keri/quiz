@@ -4,6 +4,7 @@ import com.quiz.quiz.converter.AccountConverter;
 import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.entity.AdminAccount;
 import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
+import com.quiz.quiz.principal.CustomPrincipal;
 import com.quiz.quiz.repository.accounts.AdminAccountRepository;
 import com.quiz.quiz.security.CustomUserImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class AdminAccountService {
 
     private final AdminAccountRepository adminAccountRepository;
     private final AccountConverter accountConverter;
+    private final CustomPrincipal customPrincipal;
 
     // POST
     public CreateAdminAccountResponse createAdminAccount(CreateAdminAccountRequest createAdminAccountRequest) {
@@ -34,7 +36,7 @@ public class AdminAccountService {
     public GetAdminAccountDataResponse getAdminAccountData() {
 
         AdminAccount adminAccount = adminAccountRepository
-                .getAdminAccountData(getLoggedInAccountId())
+                .getAdminAccountData(customPrincipal.getLoggedInAccountId())
                 .orElseThrow(EntityNotFoundException::new);
 
         return accountConverter.toGetAdminAccountDataResponse(adminAccount);
@@ -43,7 +45,7 @@ public class AdminAccountService {
     // UPDATE
     @Transactional
     public UpdateAdminAccountResponse updateAdminAccount(UpdateAdminAccountRequest updateAdminAccountRequest) throws EntityNotFoundException {
-        AdminAccount adminAccount = adminAccountRepository.getAdminAccountData(getLoggedInAccountId()).orElseThrow(EntityNotFoundException::new);
+        AdminAccount adminAccount = adminAccountRepository.getAdminAccountData(customPrincipal.getLoggedInAccountId()).orElseThrow(EntityNotFoundException::new);
 
         if (updateAdminAccountRequest.getPassword() != null) {
             adminAccount.setPassword(new BCryptPasswordEncoder().encode(updateAdminAccountRequest.getPassword()));
@@ -53,14 +55,5 @@ public class AdminAccountService {
         }
         adminAccountRepository.save(adminAccount);
         return accountConverter.toUpdateAdminAccountResponse(adminAccount);
-    }
-
-    private UUID getLoggedInAccountId() {
-
-        return ((CustomUserImpl) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal())
-                .getId();
     }
 }

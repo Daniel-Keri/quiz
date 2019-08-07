@@ -12,14 +12,14 @@ import com.quiz.quiz.entity.Question;
 import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.AnswerRepository;
 import com.quiz.quiz.repository.QuestionRepository;
+import com.quiz.quiz.security.CustomUserImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -58,12 +58,12 @@ public class QuestionService {
 
     public Page<AllQuestionByThemeResponse> findAllByTheme(String theme, Pageable pageable) {
 
-        return questionRepository.getAllQuestionsByThemeResponses(theme, pageable);
+        return questionRepository.getAllQuestionsByThemeResponses(theme, getLoggedInAccountId(), pageable);
     }
 
     public Page<AllQuestionByThemeResponse> findAllByThemeRandomized(String theme, Pageable pageable) {
 
-        List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme);
+        List<AllQuestionByThemeResponse> questionList = questionRepository.getAllQuestionsByThemeResponses(theme, getLoggedInAccountId());
         Collections.shuffle(questionList);
 
         return new PageImpl<>(questionList, pageable, questionList.size());
@@ -82,9 +82,9 @@ public class QuestionService {
     }
 
     // DELETE
-    public void deleteQuestion(UUID id) throws EntityNotFoundException {
+    public void deleteQuestion(UUID questionId) throws EntityNotFoundException {
 
-        Question question = questionRepository.findByIdEager(id).orElseThrow(EntityNotFoundException::new);
+        Question question = questionRepository.findByIdEager(questionId).orElseThrow(EntityNotFoundException::new);
         List<Answer> answers = question.getAnswers();
 
         answerRepository.deleteInBatch(answers);
@@ -107,6 +107,7 @@ public class QuestionService {
     }
 
     public void deleteQuestionsByThemes(List<String> themes) {
+
         List<Question> questions = questionRepository.findAllByThemeIn(themes);
         List<Answer> answers = questions.stream()
                 .flatMap(question -> question.getAnswers().stream())
@@ -118,5 +119,14 @@ public class QuestionService {
             answerRepository.deleteInBatch(answers);
             questionRepository.deleteInBatch(questions);
         }
+    }
+
+    private UUID getLoggedInAccountId() {
+
+        return ((CustomUserImpl) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal())
+                .getId();
     }
 }

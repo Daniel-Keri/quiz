@@ -8,16 +8,18 @@ import com.quiz.quiz.dto.AnsweredQuestion.TopTenScoreByThemeResponse;
 import com.quiz.quiz.entity.AnsweredQuestion;
 import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.AnsweredQuestionsRepository;
-import com.quiz.quiz.repository.accounts.AccountRepository;
+import com.quiz.quiz.security.CustomUserImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,15 +30,12 @@ public class AnsweredQuestionService {
 
     private final AnsweredQuestionsRepository answeredQuestionsRepository;
     private final AnsweredQuestionConverter answeredQuestionConverter;
-    private final AccountRepository accountRepository;
 
     //POST
     public AnsweredQuestion createAnsweredQuestion(AnsweredQuestionRequest answeredQuestionRequest) {
 
-        return answeredQuestionsRepository.save(
-                answeredQuestionConverter.toAnsweredQuestion(
-                        accountRepository.getCurrentAccountId().orElseThrow(EntityNotFoundException::new),
-                        answeredQuestionRequest));
+        return answeredQuestionsRepository
+                .save(answeredQuestionConverter.toAnsweredQuestion(getLoggedInAccountId(), answeredQuestionRequest));
     }
     
     // GET
@@ -77,6 +76,15 @@ public class AnsweredQuestionService {
 
     public Page<MyScoreResponse> getMyScores(Pageable pageable) {
 
-        return answeredQuestionsRepository.getMyScores(pageable);
+        return answeredQuestionsRepository.getMyScores(getLoggedInAccountId(), pageable);
+    }
+
+    private UUID getLoggedInAccountId() {
+
+        return ((CustomUserImpl) SecurityContextHolder
+                    .getContext()
+                    .getAuthentication()
+                    .getPrincipal())
+                .getId();
     }
 }

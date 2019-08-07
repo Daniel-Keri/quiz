@@ -5,11 +5,14 @@ import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.entity.UserAccount;
 import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.accounts.UserAccountRepository;
+import com.quiz.quiz.security.CustomUserImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ public class UserAccountService {
     private final AccountConverter accountConverter;
 
     // POST
-    public CreateUserAccountResponse createUserAccount(CreateUserAccountRequest createUserAccountRequest){
+    public CreateUserAccountResponse createUserAccount(CreateUserAccountRequest createUserAccountRequest) {
 
         UserAccount userAccount = accountConverter.toUserAccount(createUserAccountRequest);
         userAccountRepository.save(userAccount);
@@ -30,24 +33,34 @@ public class UserAccountService {
     // GET
     public GetUserAccountDataResponse getUserAccountData() {
 
-        UserAccount userAccount=userAccountRepository.getUserAccountData().orElseThrow(EntityNotFoundException::new);
+        UserAccount userAccount = userAccountRepository
+                .getUserAccountData(getLoggedInAccountId())
+                .orElseThrow(EntityNotFoundException::new);
 
         return accountConverter.toGetUserAccountDataResponse(userAccount);
     }
 
     // UPDATE
     @Transactional
-    public UpdateUserAccountResponse updateUserAccount(UpdateUserAccountRequest updateUserAccountRequest) throws EntityNotFoundException
-    {
-        UserAccount userAccount = userAccountRepository.getUserAccountData().orElseThrow(EntityNotFoundException::new);
+    public UpdateUserAccountResponse updateUserAccount(UpdateUserAccountRequest updateUserAccountRequest) throws EntityNotFoundException {
+        UserAccount userAccount = userAccountRepository.getUserAccountData(getLoggedInAccountId()).orElseThrow(EntityNotFoundException::new);
 
-        if (updateUserAccountRequest.getPassword()!=null){
+        if (updateUserAccountRequest.getPassword() != null) {
             userAccount.setPassword(new BCryptPasswordEncoder().encode(updateUserAccountRequest.getPassword()));
         }
-        if (updateUserAccountRequest.getUsername()!=null){
+        if (updateUserAccountRequest.getUsername() != null) {
             userAccount.setUsername(updateUserAccountRequest.getUsername());
         }
         userAccountRepository.save(userAccount);
         return accountConverter.toUpdateUserAccountResponse(userAccount);
+    }
+
+    private UUID getLoggedInAccountId() {
+
+        return ((CustomUserImpl) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal())
+                .getId();
     }
 }

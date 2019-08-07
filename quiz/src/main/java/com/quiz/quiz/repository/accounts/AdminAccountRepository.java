@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface AdminAccountRepository extends JpaRepository<AdminAccount, UUID> {
+
     Optional<AdminAccount> findByEmail(String email);
 
     @Query("SELECT a FROM com.quiz.quiz.entity.AdminAccount a WHERE a.id = :loggedInAdminAccountId")

@@ -3,7 +3,6 @@ package com.quiz.quiz.controller.accounts;
 import com.quiz.quiz.dto.account.*;
 import com.quiz.quiz.services.accounts.AdminAccountService;
 import com.quiz.quiz.validation.requestValidators.account.AdminAccountRequestValidator;
-import com.quiz.quiz.validation.requestValidators.account.AccountRequestValidator;
 import com.quiz.quiz.validation.requestValidators.account.UpdateUserAccountRequestValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

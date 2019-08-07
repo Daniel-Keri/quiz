@@ -7,14 +7,11 @@ import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.repository.accounts.AdminAccountRepository;
 import com.quiz.quiz.security.CustomUserImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.security.Principal;
 import java.util.UUID;
 
 @Service
@@ -24,6 +21,7 @@ public class AdminAccountService {
     private final AdminAccountRepository adminAccountRepository;
     private final AccountConverter accountConverter;
 
+    // POST
     public CreateAdminAccountResponse createAdminAccount(CreateAdminAccountRequest createAdminAccountRequest) {
 
         AdminAccount adminAccount = accountConverter.toAdminAccount(createAdminAccountRequest);
@@ -32,17 +30,11 @@ public class AdminAccountService {
         return new CreateAdminAccountResponse().setId(adminAccount.getId());
     }
 
-    public GetAdminAccountDataResponse getAdminAccountData(Principal principal) {
+    // GET
+    public GetAdminAccountDataResponse getAdminAccountData() {
 
-        // TODO: test principal + param casting
-        CustomUserImpl user = (CustomUserImpl)SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-
-        UUID id = user.getId();
         AdminAccount adminAccount = adminAccountRepository
-                .getAdminAccountData(id)
+                .getAdminAccountData(getLoggedInAccountId())
                 .orElseThrow(EntityNotFoundException::new);
 
         return accountConverter.toGetAdminAccountDataResponse(adminAccount);
@@ -50,17 +42,25 @@ public class AdminAccountService {
 
     // UPDATE
     @Transactional
-    public UpdateAdminAccountResponse updateAdminAccount(UpdateAdminAccountRequest updateAdminAccountRequest, Principal principal) throws EntityNotFoundException
-    {
-        AdminAccount adminAccount = adminAccountRepository.getAdminAccountData().orElseThrow(EntityNotFoundException::new);
+    public UpdateAdminAccountResponse updateAdminAccount(UpdateAdminAccountRequest updateAdminAccountRequest) throws EntityNotFoundException {
+        AdminAccount adminAccount = adminAccountRepository.getAdminAccountData(getLoggedInAccountId()).orElseThrow(EntityNotFoundException::new);
 
-        if (updateAdminAccountRequest.getPassword()!=null){
+        if (updateAdminAccountRequest.getPassword() != null) {
             adminAccount.setPassword(new BCryptPasswordEncoder().encode(updateAdminAccountRequest.getPassword()));
         }
-        if (updateAdminAccountRequest.getUsername()!=null){
+        if (updateAdminAccountRequest.getUsername() != null) {
             adminAccount.setUsername(updateAdminAccountRequest.getUsername());
         }
         adminAccountRepository.save(adminAccount);
         return accountConverter.toUpdateAdminAccountResponse(adminAccount);
+    }
+
+    private UUID getLoggedInAccountId() {
+
+        return ((CustomUserImpl) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal())
+                .getId();
     }
 }

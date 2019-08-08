@@ -40,6 +40,6 @@ public abstract class Account {
     private Role role;
 
     @Column(name = "hints")
-    private Integer hints;
+    private Integer hints = 10;
 
 }

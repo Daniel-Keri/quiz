@@ -14,6 +14,4 @@ public class CreateAnswerResponse {
     private String image;
 
     private Boolean isCorrect;
-
-    // private UUID id;
 }

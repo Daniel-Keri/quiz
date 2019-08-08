@@ -42,7 +42,6 @@ public class QuestionService {
         List<Answer> answers = question.getAnswers();
 
         question = questionRepository.save(question);
-        //answerRepository.saveAll(answers);
         return questionConverter.toCreateQuestionResponse(question);
     }
 

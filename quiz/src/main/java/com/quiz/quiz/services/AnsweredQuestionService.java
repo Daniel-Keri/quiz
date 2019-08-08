@@ -42,7 +42,7 @@ public class AnsweredQuestionService {
 
         Integer hintCount = accountRepository.getMyHintCount(customPrincipal.getLoggedInAccountId()).orElseThrow(EntityNotFoundException::new);
 
-        if (answeredQuestionRequest.getUsedHint()!=false && hintCount!=0 && questionRepository.getHintAllowed(answeredQuestionRequest.getQuestionId()) ) {
+        if (answeredQuestionRequest.getUsedHint() && hintCount!=0 && questionRepository.getHintAllowed(answeredQuestionRequest.getQuestionId()) ) {
 
             accountRepository.updateMyHintCount(hintCount-1,customPrincipal.getLoggedInAccountId());
             return answeredQuestionsRepository

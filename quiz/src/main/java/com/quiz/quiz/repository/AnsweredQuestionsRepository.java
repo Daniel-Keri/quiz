@@ -18,4 +18,5 @@ public interface AnsweredQuestionsRepository extends JpaRepository<AnsweredQuest
             "GROUP BY aq.theme " +
             "ORDER BY SUM(aq.points) DESC ")
     Page<MyScoreResponse> getMyScores(@Param(value = "loggedInUserAccountId") UUID loggedInUserAccountId, Pageable pageable);
+
 }

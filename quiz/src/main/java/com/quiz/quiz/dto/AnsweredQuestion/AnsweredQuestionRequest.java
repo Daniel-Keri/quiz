@@ -18,4 +18,6 @@ public class AnsweredQuestionRequest {
     private Double points;
 
     private String theme;
+
+    private Boolean usedHint;
 }

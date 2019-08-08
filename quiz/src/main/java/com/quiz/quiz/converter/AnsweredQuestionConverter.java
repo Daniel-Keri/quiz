@@ -17,6 +17,7 @@ public class AnsweredQuestionConverter {
                 .setQuestionId(answeredQuestionRequest.getQuestionId())
                 .setChosenAnswerId(answeredQuestionRequest.getAnswerId())
                 .setIsCorrect(answeredQuestionRequest.getIsCorrect())
+                .setUsedHint(answeredQuestionRequest.getUsedHint())
                 .setPoints(answeredQuestionRequest.getPoints())
                 .setUserAccountId(userAccountId)
                 .setTheme(answeredQuestionRequest.getTheme());

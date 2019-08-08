@@ -31,4 +31,5 @@ public class Answer {
     @NotNull
     @Column(name = "is_correct", nullable = false)
     private Boolean isCorrect;
+
 }

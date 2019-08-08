@@ -23,6 +23,7 @@ public class QuestionConverter {
                 .setTheme(question.getTheme())
                 .setPoints(question.getPoints())
                 .setImage(question.getImage())
+                .setAllowsHint(question.getAllowsHint())
                 .setText(question.getText());
     }
     public Question toCreateQuestion(CreateQuestionRequest createQuestionRequest) {
@@ -34,6 +35,7 @@ public class QuestionConverter {
                 .setTheme(createQuestionRequest.getTheme())
                 .setPoints(createQuestionRequest.getPoints())
                 .setImage(createQuestionRequest.getImage())
+                .setAllowsHint(createQuestionRequest.getAllowsHint())
                 .setText(createQuestionRequest.getText());
     }
 

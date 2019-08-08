@@ -25,4 +25,7 @@ public class CreateQuestionResponse {
     private String image;
         
     private Double points;
+
+    private Boolean allowsHint;
+
 }

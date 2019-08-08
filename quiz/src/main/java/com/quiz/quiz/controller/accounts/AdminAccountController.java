@@ -33,7 +33,7 @@ public class AdminAccountController {
 
     // POST
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public CreateAdminAccountResponse createAdminAccount(@Validated @RequestBody CreateAdminAccountRequest createAdminAccountRequest){
 
         return adminAccountService.createAdminAccount(createAdminAccountRequest);

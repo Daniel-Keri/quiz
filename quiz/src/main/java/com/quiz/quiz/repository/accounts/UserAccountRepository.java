@@ -14,4 +14,5 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, UUID> 
 
     @Query("SELECT a FROM com.quiz.quiz.entity.UserAccount a WHERE a.id = :loggedInUserAccountId")
     Optional<UserAccount> getUserAccountData(@Param(value = "loggedInUserAccountId") UUID loggedInUserAccountId);
+
 }

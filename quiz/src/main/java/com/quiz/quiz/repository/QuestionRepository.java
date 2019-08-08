@@ -54,4 +54,7 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
             @Param(value = "theme") String theme,
             @Param(value = "loggedInUserAccountId") UUID loggedInUserAccountId,
             Pageable pageable);
+
+    @Query("SELECT q.allowsHint FROM Question q WHERE q.id = :questionId" )
+    Boolean getHintAllowed(@Param(value = "questionId") UUID questionId);
 }

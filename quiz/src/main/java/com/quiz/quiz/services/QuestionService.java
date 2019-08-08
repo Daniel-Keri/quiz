@@ -13,12 +13,10 @@ import com.quiz.quiz.errorHandling.exceptions.EntityNotFoundException;
 import com.quiz.quiz.principal.CustomPrincipal;
 import com.quiz.quiz.repository.AnswerRepository;
 import com.quiz.quiz.repository.QuestionRepository;
-import com.quiz.quiz.security.CustomUserImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

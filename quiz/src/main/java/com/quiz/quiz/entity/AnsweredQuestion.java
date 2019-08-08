@@ -43,4 +43,8 @@ public class AnsweredQuestion {
     @NotNull
     @Column(name = "theme", nullable = false)
     private String theme;
+
+    @NotNull
+    @Column(name = "used_hint",nullable = false)
+    private Boolean usedHint;
 }

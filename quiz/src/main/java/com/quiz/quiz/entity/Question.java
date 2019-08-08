@@ -46,4 +46,8 @@ public class Question {
     @Column(name = "points", nullable = false)
     private Double points;
 
+    @NotNull
+    @Column(name = "allows_hint",nullable = false)
+    private Boolean allowsHint;
+
 }

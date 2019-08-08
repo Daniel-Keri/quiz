@@ -24,11 +24,11 @@ public abstract class Account {
     private UUID id;
 
     @NotNull
-    @Column(name = "username",nullable = false)
+    @Column(name = "username", nullable = false)
     private String username;
 
     @NotNull
-    @Column(name = "password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @NotNull
@@ -38,5 +38,8 @@ public abstract class Account {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(name = "hints")
+    private Integer hints;
 
 }

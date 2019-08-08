@@ -26,5 +26,7 @@ public class CreateQuestionRequest {
     private String text;
 
     private String image;
+
+    private Boolean allowsHint;
 }
 

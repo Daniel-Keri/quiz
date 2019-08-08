@@ -12,9 +12,10 @@ import java.util.UUID;
 //@DiscriminatorValue(value = "user_account")
 public class UserAccount extends Account {
 
-//    @ElementCollection
-//    @MapKeyColumn(name = "question_id")
-//    @Column(name = "score")
-//    @CollectionTable(name = "answered_questions")
-//    private Map<UUID, Double> answeredQuestions;
+//    @elementcollection
+//    @mapkeycolumn(name = "question_id")
+//    @column(name = "score")
+//    @collectiontable(name = "answered_questions")
+//    private map<uuid, double> answeredquestions;
+
 }

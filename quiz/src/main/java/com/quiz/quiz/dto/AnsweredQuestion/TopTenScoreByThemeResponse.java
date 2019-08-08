@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class TopTenScoreByThemeResponse {
 
-    private String username;
-
     private Double score;
 
-    public TopTenScoreByThemeResponse(String username, Double score) {
+    private String username;
 
-        this.username = username;
+    public TopTenScoreByThemeResponse(Double score, String username) {
+
         this.score = score;
+        this.username = username;
     }
 }

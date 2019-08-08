@@ -1,5 +1,6 @@
 package com.quiz.quiz.entity;
 
+import com.quiz.quiz.dto.AnsweredQuestion.TopTenScoreByThemeResponse;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
@@ -7,6 +8,17 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
+
+@SqlResultSetMapping(
+        name = "TopTenScoreByThemeResult",
+        classes = {
+                @ConstructorResult(
+                        targetClass = TopTenScoreByThemeResponse.class,
+                        columns = {
+                                @ColumnResult(name = "score", type = Double.class),
+                                @ColumnResult(name = "username", type = String.class)
+                        })
+        })
 
 @Data
 @Entity

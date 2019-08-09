@@ -41,11 +41,31 @@ public class AnsweredQuestionController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
+    @GetMapping("/scores/top")
+    @ResponseBody
+    public Page<TopTenGlobalScoreResponse> getTopTenGlobalScore(@RequestParam(name = "top") Integer top,
+                                                                Pageable pageable) {
+
+        return answeredQuestionService.getTopTenGlobalScore(top, pageable);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
     @GetMapping("/scores/topTen/byTheme/{theme}")
     @ResponseBody
-    public Page<TopTenScoreByThemeResponse> getTopTenScoreByTheme(@PathVariable("theme") String theme, Pageable pageable) throws EntityNotFoundException {
+    public Page<TopTenScoreByThemeResponse> getTopTenScoreByTheme(@PathVariable("theme") String theme,
+                                                                  Pageable pageable) throws EntityNotFoundException {
 
         return answeredQuestionService.getTopTenScoreByTheme(theme, pageable);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER')")
+    @GetMapping("/scores/top/byTheme/{theme}")
+    @ResponseBody
+    public Page<TopTenScoreByThemeResponse> getTopTenScoreByTheme(@PathVariable("theme") String theme,
+                                                                  @RequestParam(name = "top") Integer top,
+                                                                  Pageable pageable) throws EntityNotFoundException {
+
+        return answeredQuestionService.getTopTenScoreByTheme(theme, top, pageable);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

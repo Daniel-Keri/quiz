@@ -16,7 +16,8 @@ import java.util.UUID;
                         targetClass = TopTenScoreByThemeResponse.class,
                         columns = {
                                 @ColumnResult(name = "score", type = Double.class),
-                                @ColumnResult(name = "username", type = String.class)
+                                @ColumnResult(name = "username", type = String.class),
+                                @ColumnResult(name = "user_account_id", type = UUID.class)
                         })
         })
 

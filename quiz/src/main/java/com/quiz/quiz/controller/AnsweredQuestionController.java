@@ -46,6 +46,8 @@ public class AnsweredQuestionController {
     public Page<TopTenGlobalScoreResponse> getTopTenGlobalScore(@RequestParam(name = "top") Integer top,
                                                                 Pageable pageable) {
 
+        if (top < 1 || top > 100) throw new IllegalArgumentException();
+
         return answeredQuestionService.getTopTenGlobalScore(top, pageable);
     }
 
@@ -64,6 +66,8 @@ public class AnsweredQuestionController {
     public Page<TopTenScoreByThemeResponse> getTopTenScoreByTheme(@PathVariable("theme") String theme,
                                                                   @RequestParam(name = "top") Integer top,
                                                                   Pageable pageable) throws EntityNotFoundException {
+
+        if (top < 1 || top > 100) throw new IllegalArgumentException();
 
         return answeredQuestionService.getTopTenScoreByTheme(theme, top, pageable);
     }
